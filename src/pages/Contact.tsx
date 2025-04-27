@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Add this import
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -34,11 +34,11 @@ const Contact = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 text-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-              <p className="text-xl text-gray-200">
+              <p className="text-xl text-gray-700">
                 We're here to help. Reach out with any questions or inquiries.
               </p>
             </div>
@@ -46,7 +46,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Info Cards */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gradient-to-br from-gray-50 via-white to-gray-100">
           <div className="container-custom">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div className="bg-white p-8 rounded-xl shadow-md text-center">
@@ -92,7 +92,7 @@ const Contact = () => {
         </section>
 
         {/* Contact Form and Map */}
-        <section className="py-16">
+        <section className="py-16 bg-gradient-to-br from-white via-gray-50 to-white">
           <div className="container-custom">
             <div className="grid md:grid-cols-2 gap-12">
               <div>
@@ -232,7 +232,7 @@ const Contact = () => {
         </section>
 
         {/* Additional Contact Options */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gradient-to-br from-gray-50 via-white to-gray-50">
           <div className="container-custom">
             <h2 className="text-3xl font-bold mb-12 text-brand-800 text-center">Other Ways to Connect</h2>
             
