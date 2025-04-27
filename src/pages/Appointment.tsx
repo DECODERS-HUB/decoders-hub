@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { format, addDays, startOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
+import { Link } from "react-router-dom"; // Add this import
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
