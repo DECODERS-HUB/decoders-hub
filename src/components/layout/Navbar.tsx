@@ -47,9 +47,11 @@ const Navbar = () => {
     >
       <nav className="container-custom flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <div className="font-heading text-xl md:text-2xl font-bold text-brand-700">
-            DECODERS<span className="text-accent1-400">HUB</span>
-          </div>
+          <img 
+            src="/lovable-uploads/5d1bf98e-1a17-4d04-af39-a425f42160d8.png" 
+            alt="DECODERS HUB Logo" 
+            className="h-10 mr-2" 
+          />
         </Link>
 
         {/* Desktop Navigation */}
