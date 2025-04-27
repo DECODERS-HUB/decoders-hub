@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -32,7 +31,7 @@ const blogPosts = [
 
 const BlogCard = ({ post }: { post: typeof blogPosts[0] }) => {
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+    <div className="bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
       <div className="h-48 overflow-hidden">
         <img 
           src={post.imageUrl} 
@@ -57,7 +56,7 @@ const BlogCard = ({ post }: { post: typeof blogPosts[0] }) => {
 
 const BlogSection = () => {
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="section-title">Latest Insights</h2>

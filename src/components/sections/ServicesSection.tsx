@@ -40,7 +40,7 @@ const ServiceCard = ({ title, description, icon, index }: {
 }) => {
   return (
     <div 
-      className="bg-white rounded-lg p-6 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 border border-gray-100"
+      className="bg-white/80 backdrop-blur-sm rounded-lg p-6 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 border border-gray-100"
     >
       <div className="mb-4">{icon}</div>
       <h3 className="text-xl font-bold mb-2 text-brand-800">{title}</h3>
@@ -54,7 +54,7 @@ const ServiceCard = ({ title, description, icon, index }: {
 
 const ServicesSection = () => {
   return (
-    <section className="section-padding bg-gray-50">
+    <section className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="section-title">Our Services</h2>

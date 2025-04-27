@@ -6,10 +6,10 @@ import { Calendar, Clock, Mail, MessageCircle } from "lucide-react";
 
 const AppointmentSection = () => {
   return (
-    <section className="section-padding relative bg-brand-800 text-white overflow-hidden">
+    <section className="section-padding relative bg-gradient-to-br from-brand-50 via-white to-brand-50 text-brand-900 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute right-0 top-1/2 w-96 h-96 bg-accent1-400 rounded-full filter blur-[128px] opacity-10"></div>
-        <div className="absolute left-0 bottom-1/2 w-96 h-96 bg-brand-500 rounded-full filter blur-[128px] opacity-10"></div>
+        <div className="absolute right-0 top-1/2 w-96 h-96 bg-accent1-400/20 rounded-full filter blur-[128px]"></div>
+        <div className="absolute left-0 bottom-1/2 w-96 h-96 bg-brand-200/20 rounded-full filter blur-[128px]"></div>
       </div>
       
       <div className="container-custom relative z-10">
