@@ -91,11 +91,11 @@ const Services = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 text-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-              <p className="text-xl text-gray-200 mb-8">
+              <p className="text-xl text-gray-700 mb-8">
                 Comprehensive technology solutions to transform your business and drive innovation
               </p>
               <Button asChild size="lg" className="bg-accent1-400 hover:bg-accent1-500">
@@ -106,7 +106,7 @@ const Services = () => {
         </section>
 
         {/* Services List */}
-        <section className="py-16">
+        <section className="py-16 bg-gradient-to-br from-white via-gray-50 to-white">
           <div className="container-custom">
             <div className="space-y-24">
               {services.map((service, index) => (
@@ -154,7 +154,7 @@ const Services = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-brand-800 text-white py-16">
+        <section className="bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 text-brand-800 py-16">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Business?</h2>
@@ -165,7 +165,7 @@ const Services = () => {
                 <Button asChild size="lg" className="bg-accent1-400 hover:bg-accent1-500">
                   <Link to="/appointment">Book an Appointment</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+                <Button asChild variant="outline" size="lg" className="border-brand-600 text-brand-600 hover:bg-brand-50">
                   <Link to="/contact">Contact Us</Link>
                 </Button>
               </div>

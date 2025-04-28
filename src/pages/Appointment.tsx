@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { format, addDays, startOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
-import { Link } from "react-router-dom"; // Add this import
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -166,11 +166,11 @@ const Appointment = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 text-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Book an Appointment</h1>
-              <p className="text-xl text-gray-200">
+              <p className="text-xl text-gray-700">
                 Schedule a consultation with our experts to discuss your technology and business needs.
               </p>
             </div>
@@ -178,7 +178,7 @@ const Appointment = () => {
         </section>
 
         {/* Appointment Booking Section */}
-        <section className="py-16">
+        <section className="py-16 bg-gradient-to-br from-white via-gray-50 to-white">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto">
               {/* Progress Steps */}

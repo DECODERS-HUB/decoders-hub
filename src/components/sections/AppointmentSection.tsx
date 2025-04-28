@@ -6,7 +6,7 @@ import { Calendar, Clock, Mail, MessageCircle } from "lucide-react";
 
 const AppointmentSection = () => {
   return (
-    <section className="section-padding relative bg-gradient-to-br from-brand-50 via-white to-brand-50 text-brand-900 overflow-hidden">
+    <section className="section-padding relative bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute right-0 top-1/2 w-96 h-96 bg-accent1-400/20 rounded-full filter blur-[128px]"></div>
         <div className="absolute left-0 bottom-1/2 w-96 h-96 bg-brand-200/20 rounded-full filter blur-[128px]"></div>
@@ -16,49 +16,49 @@ const AppointmentSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Schedule a Consultation with Our Experts</h2>
-            <p className="text-lg text-gray-200 mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               Take the first step toward transforming your business with our technology expertise.
               Book a consultation to discuss your needs and discover tailored solutions.
             </p>
             
             <div className="space-y-6">
               <div className="flex items-start">
-                <div className="bg-brand-700/50 p-3 rounded-lg mr-4">
+                <div className="bg-brand-100/80 p-3 rounded-lg mr-4">
                   <Calendar className="h-6 w-6 text-accent1-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Flexible Scheduling</h3>
-                  <p className="text-gray-300">Choose a date and time that works best for your schedule</p>
+                  <p className="text-gray-600">Choose a date and time that works best for your schedule</p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="bg-brand-700/50 p-3 rounded-lg mr-4">
+                <div className="bg-brand-100/80 p-3 rounded-lg mr-4">
                   <Clock className="h-6 w-6 text-accent1-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Instant Confirmation</h3>
-                  <p className="text-gray-300">Receive immediate confirmation with calendar integration</p>
+                  <p className="text-gray-600">Receive immediate confirmation with calendar integration</p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="bg-brand-700/50 p-3 rounded-lg mr-4">
+                <div className="bg-brand-100/80 p-3 rounded-lg mr-4">
                   <MessageCircle className="h-6 w-6 text-accent1-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Personalized Consultation</h3>
-                  <p className="text-gray-300">One-on-one attention with our experienced consultants</p>
+                  <p className="text-gray-600">One-on-one attention with our experienced consultants</p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <div className="bg-brand-700/50 p-3 rounded-lg mr-4">
+                <div className="bg-brand-100/80 p-3 rounded-lg mr-4">
                   <Mail className="h-6 w-6 text-accent1-400" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Follow-up Report</h3>
-                  <p className="text-gray-300">Detailed post-consultation summary and recommendations</p>
+                  <p className="text-gray-600">Detailed post-consultation summary and recommendations</p>
                 </div>
               </div>
             </div>

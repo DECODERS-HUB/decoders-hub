@@ -1,6 +1,5 @@
-
 import React from "react";
-import { Link } from "react-router-dom"; // Add this import
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -102,11 +101,11 @@ const Blog = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="pt-32 pb-16 bg-gradient-to-br from-brand-950 via-brand-900 to-brand-800 text-white">
+        <section className="pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl font-bold mb-6">Tech & Business Insights</h1>
-              <p className="text-xl text-gray-200">
+              <p className="text-xl text-gray-700">
                 Expert perspectives, industry analyses, and practical advice from our team of specialists
               </p>
             </div>
@@ -114,7 +113,7 @@ const Blog = () => {
         </section>
 
         {/* Blog Content */}
-        <section className="py-16">
+        <section className="py-16 bg-gradient-to-br from-white via-gray-50 to-white">
           <div className="container-custom">
             <div className="flex flex-col lg:flex-row gap-12">
               {/* Main Content */}
@@ -278,7 +277,7 @@ const Blog = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="bg-brand-800 text-white py-16">
+        <section className="bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100 text-brand-800 py-16">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-6">Need Expert Technology Advice?</h2>
