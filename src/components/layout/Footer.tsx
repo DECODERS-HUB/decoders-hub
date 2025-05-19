@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -12,8 +11,11 @@ const Footer = () => {
           <div>
             <Link to="/" className="inline-block mb-4">
               <div className="flex items-center">
-                <div className="bg-brand-600 text-white font-bold text-xl p-2 rounded-lg">DH</div>
-                <span className="ml-2 font-heading text-xl font-bold text-brand-800">DECODERS<span className="text-accent1-400">HUB</span></span>
+                <img 
+                  src="/lovable-uploads/d1c97183-a186-4013-be6d-67bc2cc5d888.png" 
+                  alt="DECODERS HUB Logo" 
+                  className="h-10"
+                />
               </div>
             </Link>
             <p className="text-gray-600 mb-6">
