@@ -1,13 +1,14 @@
 
 import React, { useState } from "react";
 import { format, addDays, startOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
 import AIChat from "@/components/ui/AIChat";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Popover,
   PopoverContent,
@@ -63,6 +64,7 @@ const services = [
 
 const Appointment = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedService, setSelectedService] = useState(services[0]);
@@ -128,7 +130,7 @@ const Appointment = () => {
   };
   
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.firstName || !formData.lastName || !formData.email) {
@@ -140,19 +142,63 @@ const Appointment = () => {
       return;
     }
     
+    if (!date) {
+      toast({
+        title: "Missing date",
+        description: "Please select a date for your appointment.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      // Save appointment to Supabase
+      const { error } = await supabase
+        .from('appointments')
+        .insert({
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          phone: formData.phone || null,
+          company: formData.company || null,
+          notes: formData.notes || null,
+          service_id: selectedService.id,
+          service_name: selectedService.name,
+          appointment_date: format(date, 'yyyy-MM-dd'),
+          appointment_time: selectedTime
+        });
+        
+      if (error) {
+        console.error("Error saving appointment:", error);
+        toast({
+          title: "Error",
+          description: "There was an error booking your appointment. Please try again.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // If successful, move to confirmation step
       setIsSubmitting(false);
       toast({
         title: "Appointment Confirmed!",
-        description: `Your appointment for ${selectedService.name} on ${format(date!, "PPP")} at ${selectedTime} has been booked.`,
+        description: `Your appointment for ${selectedService.name} on ${format(date, "PPP")} at ${selectedTime} has been booked.`,
       });
       
       // Reset form
       setCurrentStep(4); // Move to confirmation step
-    }, 1500);
+    } catch (error) {
+      console.error("Error:", error);
+      setIsSubmitting(false);
+      toast({
+        title: "Error",
+        description: "There was an error booking your appointment. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
   
   // Get days of the current week
