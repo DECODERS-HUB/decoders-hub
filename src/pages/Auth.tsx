@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -6,7 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, LogIn, UserPlus } from "lucide-react";
+import { Eye, EyeOff, LogIn, UserPlus, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
@@ -16,6 +15,7 @@ const Auth = () => {
   const [tab, setTab] = useState("login");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -148,6 +148,107 @@ const Auth = () => {
     }
   };
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.email) {
+      toast({
+        title: "Missing email",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setLoading(true);
+    
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+        redirectTo: `${window.location.origin}/auth`,
+      });
+      
+      if (error) {
+        throw error;
+      }
+      
+      toast({
+        title: "Reset Email Sent",
+        description: "Check your email for a password reset link.",
+      });
+      
+      setShowForgotPassword(false);
+    } catch (error: any) {
+      toast({
+        title: "Reset Failed",
+        description: error.message || "An error occurred while sending the reset email.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (showForgotPassword) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <main className="py-20">
+          <section className="pt-20 pb-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-md mx-auto">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold text-brand-800">Reset Password</h1>
+                  <p className="text-gray-600 mt-2">
+                    Enter your email to receive a password reset link
+                  </p>
+                </div>
+                
+                <div className="bg-white rounded-xl shadow-md p-8">
+                  <form onSubmit={handleForgotPassword} className="space-y-4">
+                    <div>
+                      <label htmlFor="reset-email" className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <Input
+                        id="reset-email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="you@example.com"
+                        required
+                      />
+                    </div>
+                    
+                    <Button
+                      type="submit"
+                      className="w-full bg-brand-600 hover:bg-brand-700"
+                      disabled={loading}
+                    >
+                      {loading ? "Sending..." : "Send Reset Link"}
+                    </Button>
+                    
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="w-full"
+                      onClick={() => setShowForgotPassword(false)}
+                    >
+                      <ArrowLeft size={16} className="mr-2" />
+                      Back to Login
+                    </Button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -226,6 +327,16 @@ const Auth = () => {
                           </>
                         )}
                       </Button>
+                      
+                      <div className="text-center">
+                        <button
+                          type="button"
+                          className="text-sm text-brand-600 hover:text-brand-700 underline"
+                          onClick={() => setShowForgotPassword(true)}
+                        >
+                          Forgot your password?
+                        </button>
+                      </div>
                     </form>
                   </TabsContent>
                   
