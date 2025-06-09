@@ -27,18 +27,17 @@ const Auth = () => {
       console.log("Checking existing session...");
       const { data } = await supabase.auth.getSession();
       if (data.session) {
-        console.log("Session found, checking admin status for user:", data.session.user.id);
+        console.log("Session found, checking admin status for user:", data.session.user.id, "Email:", data.session.user.email);
         
-        // Check if user is admin using a more specific query
-        const { data: adminData, error: adminError } = await supabase
+        // Check if user is admin - using count instead of select
+        const { count, error: adminError } = await supabase
           .from("admin_users")
-          .select("id, email")
-          .eq("id", data.session.user.id)
-          .limit(1);
+          .select("*", { count: 'exact', head: true })
+          .eq("id", data.session.user.id);
         
-        console.log("Admin check result:", { adminData, adminError, userEmail: data.session.user.email });
+        console.log("Admin check result:", { count, adminError, userEmail: data.session.user.email });
           
-        if (!adminError && adminData && adminData.length > 0) {
+        if (!adminError && count && count > 0) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         } else {
@@ -86,22 +85,20 @@ const Auth = () => {
       console.log("Login successful for user:", data.user?.id, "Email:", data.user?.email);
       
       if (data.user) {
-        // Wait a moment for the session to be fully established
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Wait for session to be established
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
-        // Check if user is an admin with more specific query
+        // Check if user is an admin using count method
         console.log("Checking admin status for user ID:", data.user.id);
         
-        const { data: adminData, error: adminError } = await supabase
+        const { count, error: adminError } = await supabase
           .from("admin_users")
-          .select("id, email")
-          .eq("id", data.user.id)
-          .limit(1);
+          .select("*", { count: 'exact', head: true })
+          .eq("id", data.user.id);
         
         console.log("Admin query result:", { 
-          adminData, 
+          count, 
           adminError, 
-          count: adminData?.length,
           userId: data.user.id,
           userEmail: data.user.email 
         });
@@ -117,7 +114,7 @@ const Auth = () => {
           return;
         }
         
-        if (!adminData || adminData.length === 0) {
+        if (!count || count === 0) {
           console.log("User is not an admin, signing out");
           // Sign out if not admin
           await supabase.auth.signOut();

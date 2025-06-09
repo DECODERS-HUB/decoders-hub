@@ -86,17 +86,15 @@ const AdminDashboard = () => {
 
       console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id, "Email:", session.user.email);
 
-      // Check if user is an admin with more specific query
-      const { data: adminData, error: adminError } = await supabase
+      // Check if user is an admin using count method
+      const { count, error: adminError } = await supabase
         .from("admin_users")
-        .select("id, email")
-        .eq("id", session.user.id)
-        .limit(1);
+        .select("*", { count: 'exact', head: true })
+        .eq("id", session.user.id);
 
       console.log("AdminDashboard: Admin check result:", { 
-        adminData, 
+        count, 
         adminError, 
-        count: adminData?.length,
         userId: session.user.id,
         userEmail: session.user.email 
       });
@@ -112,7 +110,7 @@ const AdminDashboard = () => {
         return;
       }
 
-      if (!adminData || adminData.length === 0) {
+      if (!count || count === 0) {
         console.log("AdminDashboard: User is not an admin");
         toast({
           title: "Access Denied",
