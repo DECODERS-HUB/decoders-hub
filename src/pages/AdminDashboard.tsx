@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
@@ -67,12 +66,15 @@ const AdminDashboard = () => {
   // Check authentication and admin status
   useEffect(() => {
     const checkAuth = async () => {
+      console.log("AdminDashboard: Checking authentication...");
+      
       // Get the current session
       const { data: sessionData } = await supabase.auth.getSession();
       const session = sessionData?.session;
       setSession(session);
 
       if (!session) {
+        console.log("AdminDashboard: No session found, redirecting to auth");
         toast({
           title: "Authentication required",
           description: "Please login to access the admin dashboard.",
@@ -82,23 +84,39 @@ const AdminDashboard = () => {
         return;
       }
 
-      // Check if user is an admin
+      console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id);
+
+      // Check if user is an admin with improved error handling
       const { data: adminData, error: adminError } = await supabase
         .from("admin_users")
         .select("*")
-        .eq("id", session.user.id)
-        .single();
+        .eq("id", session.user.id);
 
-      if (adminError || !adminData) {
+      console.log("AdminDashboard: Admin check result:", { adminData, adminError, count: adminData?.length });
+
+      if (adminError) {
+        console.error("AdminDashboard: Error checking admin status:", adminError);
+        toast({
+          title: "Database Error",
+          description: "Failed to verify admin access. Please try again.",
+          variant: "destructive",
+        });
+        navigate("/auth");
+        return;
+      }
+
+      if (!adminData || adminData.length === 0) {
+        console.log("AdminDashboard: User is not an admin");
         toast({
           title: "Access Denied",
-          description: "You don't have permission to access this area.",
+          description: "You don't have permission to access this area. Please contact the administrator to grant you access.",
           variant: "destructive",
         });
         navigate("/");
         return;
       }
 
+      console.log("AdminDashboard: User is admin, proceeding to load dashboard");
       setIsAdmin(true);
       fetchAppointments();
     };
@@ -108,7 +126,9 @@ const AdminDashboard = () => {
     // Setup auth state change listener
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log("AdminDashboard: Auth state changed:", event);
         if (event === "SIGNED_OUT") {
+          console.log("AdminDashboard: User signed out, redirecting to auth");
           navigate("/auth");
         }
         setSession(session);
@@ -122,6 +142,7 @@ const AdminDashboard = () => {
 
   // Handle logout
   const handleLogout = async () => {
+    console.log("AdminDashboard: Logging out user");
     await supabase.auth.signOut();
     navigate("/auth");
   };
@@ -226,7 +247,14 @@ const AdminDashboard = () => {
   };
 
   if (!session || !isAdmin) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Verifying admin access...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

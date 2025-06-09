@@ -24,18 +24,28 @@ const Auth = () => {
   useEffect(() => {
     // Check if already authenticated
     const checkSession = async () => {
+      console.log("Checking existing session...");
       const { data } = await supabase.auth.getSession();
       if (data.session) {
+        console.log("Session found, checking admin status for user:", data.session.user.id);
+        
         // Check if user is admin
-        const { data: adminData } = await supabase
+        const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
-          .select()
+          .select("*")
           .eq("id", data.session.user.id)
           .single();
+        
+        console.log("Admin check result:", { adminData, adminError });
           
-        if (adminData) {
+        if (adminData && !adminError) {
+          console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
+        } else {
+          console.log("User is not admin or error occurred:", adminError?.message);
         }
+      } else {
+        console.log("No existing session found");
       }
     };
     
@@ -60,6 +70,7 @@ const Auth = () => {
     }
     
     setLoading(true);
+    console.log("Attempting login for:", formData.email);
     
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -68,26 +79,45 @@ const Auth = () => {
       });
       
       if (error) {
+        console.error("Login error:", error);
         throw error;
       }
       
+      console.log("Login successful for user:", data.user?.id);
+      
       if (data.user) {
-        // Check if user is an admin
+        // Check if user is an admin with detailed logging
+        console.log("Checking admin status for user ID:", data.user.id);
+        
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
-          .select()
-          .eq("id", data.user.id)
-          .single();
+          .select("*")
+          .eq("id", data.user.id);
         
-        if (adminError || !adminData) {
+        console.log("Admin query result:", { adminData, adminError, count: adminData?.length });
+        
+        if (adminError) {
+          console.error("Error checking admin status:", adminError);
+          toast({
+            title: "Database Error",
+            description: "Failed to verify admin status. Please try again.",
+            variant: "destructive",
+          });
+          await supabase.auth.signOut();
+          return;
+        }
+        
+        if (!adminData || adminData.length === 0) {
+          console.log("User is not an admin, signing out");
           // Sign out if not admin
           await supabase.auth.signOut();
           toast({
             title: "Access Denied",
-            description: "You don't have permission to access the admin area.",
+            description: "You don't have permission to access the admin area. Please contact the administrator to grant you access.",
             variant: "destructive",
           });
         } else {
+          console.log("User is admin, proceeding to dashboard");
           toast({
             title: "Login Successful",
             description: "Welcome to the admin dashboard.",
@@ -96,6 +126,7 @@ const Auth = () => {
         }
       }
     } catch (error: any) {
+      console.error("Login failed:", error);
       toast({
         title: "Login Failed",
         description: error.message || "An error occurred during login.",
@@ -119,6 +150,7 @@ const Auth = () => {
     }
     
     setLoading(true);
+    console.log("Attempting signup for:", formData.email);
     
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -127,9 +159,11 @@ const Auth = () => {
       });
       
       if (error) {
+        console.error("Signup error:", error);
         throw error;
       }
       
+      console.log("Signup successful:", data);
       toast({
         title: "Registration Successful",
         description: "Your account has been created. Please contact the system administrator to grant you admin access.",
@@ -138,6 +172,7 @@ const Auth = () => {
       // Switch to login tab
       setTab("login");
     } catch (error: any) {
+      console.error("Registration failed:", error);
       toast({
         title: "Registration Failed",
         description: error.message || "An error occurred during registration.",
