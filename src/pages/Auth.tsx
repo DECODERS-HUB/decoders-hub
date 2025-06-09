@@ -29,16 +29,16 @@ const Auth = () => {
       if (data.session) {
         console.log("Session found, checking admin status for user:", data.session.user.id);
         
-        // Check if user is admin
+        // Check if user is admin using a more specific query
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
-          .select("*")
+          .select("id, email")
           .eq("id", data.session.user.id)
-          .single();
+          .limit(1);
         
-        console.log("Admin check result:", { adminData, adminError });
+        console.log("Admin check result:", { adminData, adminError, userEmail: data.session.user.email });
           
-        if (adminData && !adminError) {
+        if (!adminError && adminData && adminData.length > 0) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         } else {
@@ -83,18 +83,28 @@ const Auth = () => {
         throw error;
       }
       
-      console.log("Login successful for user:", data.user?.id);
+      console.log("Login successful for user:", data.user?.id, "Email:", data.user?.email);
       
       if (data.user) {
-        // Check if user is an admin with detailed logging
+        // Wait a moment for the session to be fully established
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Check if user is an admin with more specific query
         console.log("Checking admin status for user ID:", data.user.id);
         
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
-          .select("*")
-          .eq("id", data.user.id);
+          .select("id, email")
+          .eq("id", data.user.id)
+          .limit(1);
         
-        console.log("Admin query result:", { adminData, adminError, count: adminData?.length });
+        console.log("Admin query result:", { 
+          adminData, 
+          adminError, 
+          count: adminData?.length,
+          userId: data.user.id,
+          userEmail: data.user.email 
+        });
         
         if (adminError) {
           console.error("Error checking admin status:", adminError);

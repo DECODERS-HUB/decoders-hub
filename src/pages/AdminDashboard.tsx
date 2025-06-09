@@ -84,15 +84,22 @@ const AdminDashboard = () => {
         return;
       }
 
-      console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id);
+      console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id, "Email:", session.user.email);
 
-      // Check if user is an admin with improved error handling
+      // Check if user is an admin with more specific query
       const { data: adminData, error: adminError } = await supabase
         .from("admin_users")
-        .select("*")
-        .eq("id", session.user.id);
+        .select("id, email")
+        .eq("id", session.user.id)
+        .limit(1);
 
-      console.log("AdminDashboard: Admin check result:", { adminData, adminError, count: adminData?.length });
+      console.log("AdminDashboard: Admin check result:", { 
+        adminData, 
+        adminError, 
+        count: adminData?.length,
+        userId: session.user.id,
+        userEmail: session.user.email 
+      });
 
       if (adminError) {
         console.error("AdminDashboard: Error checking admin status:", adminError);
