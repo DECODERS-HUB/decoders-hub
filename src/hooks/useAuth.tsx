@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,18 +15,25 @@ export const useAuth = () => {
       if (data.session) {
         console.log("Session found, checking admin status for user:", data.session.user.id, "Email:", data.session.user.email);
         
-        const { count, error: adminError } = await supabase
+        // Check admin status by both ID and email
+        const { count: countById, error: adminErrorById } = await supabase
           .from("admin_users")
           .select("*", { count: 'exact', head: true })
           .eq("id", data.session.user.id);
+
+        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+          .from("admin_users")
+          .select("*", { count: 'exact', head: true })
+          .eq("email", data.session.user.email);
         
-        console.log("Admin check result:", { count, adminError, userEmail: data.session.user.email });
+        console.log("Admin check by ID result:", { countById, adminErrorById, userEmail: data.session.user.email });
+        console.log("Admin check by email result:", { countByEmail, adminErrorByEmail, userEmail: data.session.user.email });
           
-        if (!adminError && count && count > 0) {
+        if ((!adminErrorById && countById && countById > 0) || (!adminErrorByEmail && countByEmail && countByEmail > 0)) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         } else {
-          console.log("User is not admin or error occurred:", adminError?.message);
+          console.log("User is not admin or error occurred:", adminErrorById?.message || adminErrorByEmail?.message);
         }
       } else {
         console.log("No existing session found");
@@ -68,20 +74,33 @@ export const useAuth = () => {
         
         console.log("Checking admin status for user ID:", data.user.id);
         
-        const { count, error: adminError } = await supabase
+        // Check admin status by both ID and email
+        const { count: countById, error: adminErrorById } = await supabase
           .from("admin_users")
           .select("*", { count: 'exact', head: true })
           .eq("id", data.user.id);
+
+        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+          .from("admin_users")
+          .select("*", { count: 'exact', head: true })
+          .eq("email", data.user.email);
         
-        console.log("Admin query result:", { 
-          count, 
-          adminError, 
+        console.log("Admin query by ID result:", { 
+          countById, 
+          adminErrorById, 
+          userId: data.user.id,
+          userEmail: data.user.email 
+        });
+
+        console.log("Admin query by email result:", { 
+          countByEmail, 
+          adminErrorByEmail, 
           userId: data.user.id,
           userEmail: data.user.email 
         });
         
-        if (adminError) {
-          console.error("Error checking admin status:", adminError);
+        if (adminErrorById && adminErrorByEmail) {
+          console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
           toast({
             title: "Database Error",
             description: "Failed to verify admin status. Please try again.",
@@ -91,7 +110,8 @@ export const useAuth = () => {
           return;
         }
         
-        if (!count || count === 0) {
+        // Check if user is admin by either ID or email
+        if ((!countById || countById === 0) && (!countByEmail || countByEmail === 0)) {
           console.log("User is not an admin, signing out");
           await supabase.auth.signOut();
           toast({

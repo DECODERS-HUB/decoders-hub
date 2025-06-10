@@ -31,20 +31,40 @@ export const useAdminAuth = () => {
 
       console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id, "Email:", session.user.email);
 
-      const { count, error: adminError } = await supabase
+      // First, let's check what's in the admin_users table
+      const { data: allAdmins, error: fetchError } = await supabase
+        .from("admin_users")
+        .select("*");
+
+      console.log("AdminDashboard: All admin users in table:", allAdmins, "Error:", fetchError);
+
+      // Now check if this specific user is an admin using both id and email
+      const { count: countById, error: adminErrorById } = await supabase
         .from("admin_users")
         .select("*", { count: 'exact', head: true })
         .eq("id", session.user.id);
 
-      console.log("AdminDashboard: Admin check result:", { 
-        count, 
-        adminError, 
+      const { count: countByEmail, error: adminErrorByEmail } = await supabase
+        .from("admin_users")
+        .select("*", { count: 'exact', head: true })
+        .eq("email", session.user.email);
+
+      console.log("AdminDashboard: Admin check by ID result:", { 
+        countById, 
+        adminErrorById, 
         userId: session.user.id,
         userEmail: session.user.email 
       });
 
-      if (adminError) {
-        console.error("AdminDashboard: Error checking admin status:", adminError);
+      console.log("AdminDashboard: Admin check by email result:", { 
+        countByEmail, 
+        adminErrorByEmail, 
+        userId: session.user.id,
+        userEmail: session.user.email 
+      });
+
+      if (adminErrorById || adminErrorByEmail) {
+        console.error("AdminDashboard: Error checking admin status:", adminErrorById || adminErrorByEmail);
         toast({
           title: "Database Error",
           description: "Failed to verify admin access. Please try again.",
@@ -54,7 +74,8 @@ export const useAdminAuth = () => {
         return;
       }
 
-      if (!count || count === 0) {
+      // Check if user is admin by either ID or email
+      if ((!countById || countById === 0) && (!countByEmail || countByEmail === 0)) {
         console.log("AdminDashboard: User is not an admin");
         toast({
           title: "Access Denied",
