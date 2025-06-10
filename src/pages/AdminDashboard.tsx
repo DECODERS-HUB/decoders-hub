@@ -1,30 +1,15 @@
+
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import AppointmentTable from "@/components/admin/AppointmentTable";
+import AppointmentFilters from "@/components/admin/AppointmentFilters";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Table, 
-  TableBody, 
-  TableCaption, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from "@/components/ui/table";
-import { 
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon, LogOut, RefreshCw, Search } from "lucide-react";
+import { LogOut, RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -33,7 +18,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Appointment {
   id: string;
@@ -52,107 +43,21 @@ interface Appointment {
 }
 
 const AdminDashboard = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const { session, isAdmin, handleLogout } = useAdminAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState<any>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
-  // Check authentication and admin status
   useEffect(() => {
-    const checkAuth = async () => {
-      console.log("AdminDashboard: Checking authentication...");
-      
-      // Get the current session
-      const { data: sessionData } = await supabase.auth.getSession();
-      const session = sessionData?.session;
-      setSession(session);
-
-      if (!session) {
-        console.log("AdminDashboard: No session found, redirecting to auth");
-        toast({
-          title: "Authentication required",
-          description: "Please login to access the admin dashboard.",
-          variant: "destructive",
-        });
-        navigate("/auth");
-        return;
-      }
-
-      console.log("AdminDashboard: Session found, checking admin status for user:", session.user.id, "Email:", session.user.email);
-
-      // Check if user is an admin using count method
-      const { count, error: adminError } = await supabase
-        .from("admin_users")
-        .select("*", { count: 'exact', head: true })
-        .eq("id", session.user.id);
-
-      console.log("AdminDashboard: Admin check result:", { 
-        count, 
-        adminError, 
-        userId: session.user.id,
-        userEmail: session.user.email 
-      });
-
-      if (adminError) {
-        console.error("AdminDashboard: Error checking admin status:", adminError);
-        toast({
-          title: "Database Error",
-          description: "Failed to verify admin access. Please try again.",
-          variant: "destructive",
-        });
-        navigate("/auth");
-        return;
-      }
-
-      if (!count || count === 0) {
-        console.log("AdminDashboard: User is not an admin");
-        toast({
-          title: "Access Denied",
-          description: "You don't have permission to access this area. Please contact the administrator to grant you access.",
-          variant: "destructive",
-        });
-        navigate("/");
-        return;
-      }
-
-      console.log("AdminDashboard: User is admin, proceeding to load dashboard");
-      setIsAdmin(true);
+    if (isAdmin) {
       fetchAppointments();
-    };
+    }
+  }, [isAdmin]);
 
-    checkAuth();
-
-    // Setup auth state change listener
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log("AdminDashboard: Auth state changed:", event);
-        if (event === "SIGNED_OUT") {
-          console.log("AdminDashboard: User signed out, redirecting to auth");
-          navigate("/auth");
-        }
-        setSession(session);
-      }
-    );
-
-    return () => {
-      authListener?.subscription.unsubscribe();
-    };
-  }, [navigate, toast]);
-
-  // Handle logout
-  const handleLogout = async () => {
-    console.log("AdminDashboard: Logging out user");
-    await supabase.auth.signOut();
-    navigate("/auth");
-  };
-
-  // Fetch appointments from the database
   const fetchAppointments = async () => {
     setLoading(true);
     try {
@@ -180,7 +85,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Update appointment status
   const updateAppointmentStatus = async (id: string, status: string) => {
     try {
       const { error } = await supabase
@@ -192,7 +96,6 @@ const AdminDashboard = () => {
         throw error;
       }
 
-      // Update local state
       setAppointments((prev) =>
         prev.map((app) => (app.id === id ? { ...app, status } : app))
       );
@@ -215,7 +118,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Filter appointments based on status and search query
   const filteredAppointments = appointments.filter((appointment) => {
     const matchesStatus =
       statusFilter === "all" || appointment.status === statusFilter;
@@ -231,13 +133,11 @@ const AdminDashboard = () => {
     return matchesStatus && matchesSearch;
   });
 
-  // Handle view details
   const viewAppointmentDetails = (appointment: Appointment) => {
     setSelectedAppointment(appointment);
     setShowDetailsModal(true);
   };
 
-  // Get status badge color
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
       case "confirmed":
@@ -247,7 +147,7 @@ const AdminDashboard = () => {
       case "completed":
         return "bg-blue-500";
       default:
-        return "bg-yellow-500"; // pending
+        return "bg-yellow-500";
     }
   };
 
@@ -294,135 +194,20 @@ const AdminDashboard = () => {
                 {loading && <RefreshCw size={18} className="animate-spin" />}
               </div>
 
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                  <Input
-                    placeholder="Search appointments..."
-                    className="pl-10 w-full md:w-60"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full md:w-40">
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Status</SelectLabel>
-                      <SelectItem value="all">All</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="confirmed">Confirmed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+              <AppointmentFilters
+                searchQuery={searchQuery}
+                statusFilter={statusFilter}
+                onSearchChange={setSearchQuery}
+                onStatusChange={setStatusFilter}
+              />
             </div>
 
-            {/* Appointment Table */}
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Client</TableHead>
-                    <TableHead>Service</TableHead>
-                    <TableHead>Date & Time</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredAppointments.length === 0 ? (
-                    <TableRow>
-                      <TableCell
-                        colSpan={5}
-                        className="h-24 text-center text-gray-500"
-                      >
-                        {loading
-                          ? "Loading appointments..."
-                          : "No appointments found."}
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    filteredAppointments.map((appointment) => (
-                      <TableRow key={appointment.id}>
-                        <TableCell>
-                          <div className="font-medium">
-                            {appointment.first_name} {appointment.last_name}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {appointment.email}
-                          </div>
-                        </TableCell>
-                        <TableCell>{appointment.service_name}</TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-1">
-                            <CalendarIcon size={14} className="text-gray-400" />
-                            <span>
-                              {format(
-                                parseISO(appointment.appointment_date),
-                                "MMM d, yyyy"
-                              )}
-                            </span>
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {appointment.appointment_time}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            className={`${getStatusBadgeColor(
-                              appointment.status
-                            )} text-white capitalize`}
-                          >
-                            {appointment.status}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() =>
-                                viewAppointmentDetails(appointment)
-                              }
-                            >
-                              Details
-                            </Button>
-                            <Select
-                              value={appointment.status}
-                              onValueChange={(value) =>
-                                updateAppointmentStatus(appointment.id, value)
-                              }
-                            >
-                              <SelectTrigger className="h-8 w-[110px]">
-                                <SelectValue placeholder="Status" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="confirmed">
-                                  Confirmed
-                                </SelectItem>
-                                <SelectItem value="cancelled">
-                                  Cancelled
-                                </SelectItem>
-                                <SelectItem value="completed">
-                                  Completed
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
+            <AppointmentTable
+              appointments={filteredAppointments}
+              loading={loading}
+              onViewDetails={viewAppointmentDetails}
+              onUpdateStatus={updateAppointmentStatus}
+            />
           </div>
         </div>
       </main>
@@ -502,6 +287,7 @@ const AdminDashboard = () => {
                       "MMMM d, yyyy 'at' h:mm a"
                     )}
                   </p>
+                  
                 </div>
               </div>
 
