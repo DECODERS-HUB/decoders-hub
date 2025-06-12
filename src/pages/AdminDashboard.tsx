@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { format, parseISO } from "date-fns";
 import Navbar from "@/components/layout/Navbar";
@@ -43,6 +42,10 @@ interface Appointment {
 }
 
 const AdminDashboard = () => {
+  useEffect(() => {
+    document.title = "Admin Dashboard - DECODERS HUB";
+  }, []);
+
   const { toast } = useToast();
   const { session, isAdmin, handleLogout } = useAdminAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);

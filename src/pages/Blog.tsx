@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -86,6 +86,10 @@ const categories = [
 ];
 
 const Blog = () => {
+  useEffect(() => {
+    document.title = "Tech & Business Insights - DECODERS HUB";
+  }, []);
+
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [searchQuery, setSearchQuery] = React.useState("");
   

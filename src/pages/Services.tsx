@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,10 @@ import AIChat from "@/components/ui/AIChat";
 import { BookOpen, Code, Laptop, PenTool, Users, Check } from "lucide-react";
 
 const Services = () => {
+  useEffect(() => {
+    document.title = "Our Services - DECODERS HUB";
+  }, []);
+
   const services = [
     {
       id: "tech-training",

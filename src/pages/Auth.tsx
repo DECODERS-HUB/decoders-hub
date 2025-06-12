@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -9,6 +8,10 @@ import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
 import { useAuth } from "@/hooks/useAuth";
 
 const Auth = () => {
+  useEffect(() => {
+    document.title = "Admin Login - DECODERS HUB";
+  }, []);
+
   const [tab, setTab] = useState("login");
   const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);

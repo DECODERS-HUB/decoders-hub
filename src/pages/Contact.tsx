@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -9,6 +8,10 @@ import AIChat from "@/components/ui/AIChat";
 import { Mail, MapPin, Phone, Clock, MessageCircle, Users } from "lucide-react";
 
 const Contact = () => {
+  useEffect(() => {
+    document.title = "Contact Us - DECODERS HUB";
+  }, []);
+
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
