@@ -13,7 +13,7 @@ export const useAuth = () => {
       console.log("Checking existing session...");
       const { data } = await supabase.auth.getSession();
       if (data.session) {
-        console.log("Session found, checking admin status for user:", data.session.user.id, "Email:", data.session.user.email);
+        console.log("Session found, checking admin status for user:", data.session.user.id);
         
         // Check admin status by both ID and email
         const { count: countById, error: adminErrorById } = await supabase
@@ -25,15 +25,12 @@ export const useAuth = () => {
           .from("admin_users")
           .select("*", { count: 'exact', head: true })
           .eq("email", data.session.user.email);
-        
-        console.log("Admin check by ID result:", { countById, adminErrorById, userEmail: data.session.user.email });
-        console.log("Admin check by email result:", { countByEmail, adminErrorByEmail, userEmail: data.session.user.email });
           
         if ((!adminErrorById && countById && countById > 0) || (!adminErrorByEmail && countByEmail && countByEmail > 0)) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         } else {
-          console.log("User is not admin or error occurred:", adminErrorById?.message || adminErrorByEmail?.message);
+          console.log("User is not admin");
         }
       } else {
         console.log("No existing session found");
@@ -67,7 +64,7 @@ export const useAuth = () => {
         throw error;
       }
       
-      console.log("Login successful for user:", data.user?.id, "Email:", data.user?.email);
+      console.log("Login successful for user:", data.user?.id);
       
       if (data.user) {
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -84,20 +81,6 @@ export const useAuth = () => {
           .from("admin_users")
           .select("*", { count: 'exact', head: true })
           .eq("email", data.user.email);
-        
-        console.log("Admin query by ID result:", { 
-          countById, 
-          adminErrorById, 
-          userId: data.user.id,
-          userEmail: data.user.email 
-        });
-
-        console.log("Admin query by email result:", { 
-          countByEmail, 
-          adminErrorByEmail, 
-          userId: data.user.id,
-          userEmail: data.user.email 
-        });
         
         if (adminErrorById && adminErrorByEmail) {
           console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
