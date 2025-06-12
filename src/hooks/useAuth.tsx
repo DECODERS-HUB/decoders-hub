@@ -14,23 +14,39 @@ export const useAuth = () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
         console.log("Session found, checking admin status for user:", data.session.user.id);
+        console.log("User email:", data.session.user.email);
         
-        // Check admin status by both ID and email
-        const { count: countById, error: adminErrorById } = await supabase
+        // Check admin status by both ID and email with detailed logging
+        console.log("Checking admin by ID...");
+        const { count: countById, error: adminErrorById, data: adminDataById } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*", { count: 'exact', head: false })
           .eq("id", data.session.user.id);
 
-        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+        console.log("Admin check by ID result:", { countById, adminErrorById, adminDataById });
+
+        console.log("Checking admin by email...");
+        const { count: countByEmail, error: adminErrorByEmail, data: adminDataByEmail } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*", { count: 'exact', head: false })
           .eq("email", data.session.user.email);
+
+        console.log("Admin check by email result:", { countByEmail, adminErrorByEmail, adminDataByEmail });
+
+        // Let's also check what's actually in the admin_users table
+        console.log("Fetching all admin users to debug...");
+        const { data: allAdminUsers, error: allAdminError } = await supabase
+          .from("admin_users")
+          .select("*");
+        
+        console.log("All admin users in table:", allAdminUsers);
+        console.log("Error fetching admin users:", allAdminError);
           
         if ((!adminErrorById && countById && countById > 0) || (!adminErrorByEmail && countByEmail && countByEmail > 0)) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         } else {
-          console.log("User is not admin");
+          console.log("User is not admin - counts:", { countById, countByEmail });
         }
       } else {
         console.log("No existing session found");
@@ -65,22 +81,53 @@ export const useAuth = () => {
       }
       
       console.log("Login successful for user:", data.user?.id);
+      console.log("User email from auth:", data.user?.email);
       
       if (data.user) {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         console.log("Checking admin status for user ID:", data.user.id);
+        console.log("Checking admin status for user email:", data.user.email);
         
-        // Check admin status by both ID and email
-        const { count: countById, error: adminErrorById } = await supabase
+        // Check admin status by both ID and email with detailed logging
+        console.log("=== DETAILED ADMIN CHECK ===");
+        
+        console.log("1. Checking by ID...");
+        const { count: countById, error: adminErrorById, data: adminDataById } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*", { count: 'exact', head: false })
           .eq("id", data.user.id);
 
-        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+        console.log("Admin check by ID results:", {
+          countById,
+          adminErrorById,
+          adminDataById,
+          userIdBeingChecked: data.user.id
+        });
+
+        console.log("2. Checking by email...");
+        const { count: countByEmail, error: adminErrorByEmail, data: adminDataByEmail } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*", { count: 'exact', head: false })
           .eq("email", data.user.email);
+
+        console.log("Admin check by email results:", {
+          countByEmail,
+          adminErrorByEmail,
+          adminDataByEmail,
+          userEmailBeingChecked: data.user.email
+        });
+
+        // Let's also fetch all admin users to see what's in the table
+        console.log("3. Fetching all admin users...");
+        const { data: allAdmins, error: allAdminsError } = await supabase
+          .from("admin_users")
+          .select("*");
+        
+        console.log("All admin users:", allAdmins);
+        console.log("Error fetching all admins:", allAdminsError);
+        
+        console.log("=== END DETAILED ADMIN CHECK ===");
         
         if (adminErrorById && adminErrorByEmail) {
           console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
@@ -94,7 +141,16 @@ export const useAuth = () => {
         }
         
         // Check if user is admin by either ID or email
-        if ((!countById || countById === 0) && (!countByEmail || countByEmail === 0)) {
+        const isAdminById = !adminErrorById && countById && countById > 0;
+        const isAdminByEmail = !adminErrorByEmail && countByEmail && countByEmail > 0;
+        
+        console.log("Final admin check results:", {
+          isAdminById,
+          isAdminByEmail,
+          finalResult: isAdminById || isAdminByEmail
+        });
+        
+        if (!isAdminById && !isAdminByEmail) {
           console.log("User is not an admin, signing out");
           await supabase.auth.signOut();
           toast({
