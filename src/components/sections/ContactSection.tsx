@@ -119,7 +119,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-1">Office Location</h4>
-                    <p className="text-gray-600">123 Business Avenue, Tech City, TC 10011</p>
+                    <p className="text-gray-600">Kwara State, Nigeria</p>
                   </div>
                 </div>
                 
@@ -129,7 +129,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-1">Email Us</h4>
-                    <a href="mailto:info@decodershub.com" className="text-gray-600 hover:text-brand-600 transition-colors">info@decodershub.com</a>
+                    <a href="mailto:hub.decoders@gmail.com" className="text-gray-600 hover:text-brand-600 transition-colors">hub.decoders@gmail.com</a>
                   </div>
                 </div>
                 
@@ -139,7 +139,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-1">Call Us</h4>
-                    <a href="tel:+1234567890" className="text-gray-600 hover:text-brand-600 transition-colors">+1 (234) 567-890</a>
+                    <a href="tel:+2348109220648" className="text-gray-600 hover:text-brand-600 transition-colors">+234(0)8109220648</a>
                   </div>
                 </div>
               </div>

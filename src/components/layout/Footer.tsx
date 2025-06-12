@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -95,15 +96,15 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-accent1-400 mr-3 mt-1 flex-shrink-0" />
-                <span className="text-gray-600">123 Business Avenue, Tech City, TC 10011</span>
+                <span className="text-gray-600">Kwara State, Nigeria</span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-accent1-400 mr-3 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-gray-600 hover:text-accent1-400 transition-colors">+1 (234) 567-890</a>
+                <a href="tel:+2348109220648" className="text-gray-600 hover:text-accent1-400 transition-colors">+234(0)8109220648</a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-accent1-400 mr-3 flex-shrink-0" />
-                <a href="mailto:info@decodershub.com" className="text-gray-600 hover:text-accent1-400 transition-colors">info@decodershub.com</a>
+                <a href="mailto:hub.decoders@gmail.com" className="text-gray-600 hover:text-accent1-400 transition-colors">hub.decoders@gmail.com</a>
               </li>
             </ul>
           </div>

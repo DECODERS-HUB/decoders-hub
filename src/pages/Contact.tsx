@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
@@ -59,10 +60,10 @@ const Contact = () => {
                 <h3 className="text-xl font-bold mb-2">Call Us</h3>
                 <p className="text-gray-600 mb-4">Our friendly team is here to help.</p>
                 <a 
-                  href="tel:+1234567890" 
+                  href="tel:+2348109220648" 
                   className="text-lg font-medium text-brand-600 hover:text-brand-700 transition-colors"
                 >
-                  +1 (234) 567-890
+                  +234(0)8109220648
                 </a>
               </div>
               
@@ -73,10 +74,10 @@ const Contact = () => {
                 <h3 className="text-xl font-bold mb-2">Email Us</h3>
                 <p className="text-gray-600 mb-4">We'll respond within 24 hours.</p>
                 <a 
-                  href="mailto:info@decodershub.com" 
+                  href="mailto:hub.decoders@gmail.com" 
                   className="text-lg font-medium text-brand-600 hover:text-brand-700 transition-colors"
                 >
-                  info@decodershub.com
+                  hub.decoders@gmail.com
                 </a>
               </div>
               
@@ -87,7 +88,7 @@ const Contact = () => {
                 <h3 className="text-xl font-bold mb-2">Visit Us</h3>
                 <p className="text-gray-600 mb-4">Come say hello at our office.</p>
                 <address className="text-lg font-medium text-brand-600 not-italic">
-                  123 Business Avenue, Tech City, TC 10011
+                  Kwara State, Nigeria
                 </address>
               </div>
             </div>
