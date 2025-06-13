@@ -64,10 +64,17 @@ export const useAuth = () => {
         throw error;
       }
       
-      console.log("Login successful for user:", data.user?.id);
+      console.log("Login successful for user:", data.user?.id, "email:", data.user?.email);
       
       if (data.user) {
         await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // First, let's check what's in the admin_users table
+        const { data: allAdmins, error: allAdminsError } = await supabase
+          .from("admin_users")
+          .select("*");
+        
+        console.log("All admin users in database:", allAdmins, allAdminsError);
         
         // Check admin status by both ID and email
         const { data: adminDataById, error: adminErrorById } = await supabase
@@ -80,6 +87,8 @@ export const useAuth = () => {
           .select("*")
           .eq("email", data.user.email);
         
+        console.log("User ID from session:", data.user.id);
+        console.log("User email from session:", data.user.email);
         console.log("Admin check by ID:", { adminDataById, adminErrorById });
         console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
         
