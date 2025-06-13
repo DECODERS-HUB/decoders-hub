@@ -16,17 +16,21 @@ export const useAuth = () => {
         console.log("Session found, checking admin status");
         
         // Check admin status by both ID and email
-        const { count: countById, error: adminErrorById } = await supabase
+        const { data: adminDataById, error: adminErrorById } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*")
           .eq("id", data.session.user.id);
 
-        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+        const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*")
           .eq("email", data.session.user.email);
           
-        if ((!adminErrorById && countById && countById > 0) || (!adminErrorByEmail && countByEmail && countByEmail > 0)) {
+        console.log("Admin check by ID:", { adminDataById, adminErrorById });
+        console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
+          
+        if ((!adminErrorById && adminDataById && adminDataById.length > 0) || 
+            (!adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0)) {
           console.log("User is admin, redirecting to dashboard");
           navigate("/admin");
         }
@@ -66,15 +70,18 @@ export const useAuth = () => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Check admin status by both ID and email
-        const { count: countById, error: adminErrorById } = await supabase
+        const { data: adminDataById, error: adminErrorById } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*")
           .eq("id", data.user.id);
 
-        const { count: countByEmail, error: adminErrorByEmail } = await supabase
+        const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
           .from("admin_users")
-          .select("*", { count: 'exact', head: true })
+          .select("*")
           .eq("email", data.user.email);
+        
+        console.log("Admin check by ID:", { adminDataById, adminErrorById });
+        console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
         
         if (adminErrorById && adminErrorByEmail) {
           console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
@@ -88,8 +95,10 @@ export const useAuth = () => {
         }
         
         // Check if user is admin by either ID or email
-        const isAdminById = !adminErrorById && countById && countById > 0;
-        const isAdminByEmail = !adminErrorByEmail && countByEmail && countByEmail > 0;
+        const isAdminById = !adminErrorById && adminDataById && adminDataById.length > 0;
+        const isAdminByEmail = !adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0;
+        
+        console.log("Admin status:", { isAdminById, isAdminByEmail });
         
         if (!isAdminById && !isAdminByEmail) {
           console.log("User is not an admin, signing out");

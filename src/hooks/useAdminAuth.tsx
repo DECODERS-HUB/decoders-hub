@@ -29,18 +29,21 @@ export const useAdminAuth = () => {
         return;
       }
 
-      console.log("Session found for user:", session.user.id);
+      console.log("Session found for user:", session.user.id, "email:", session.user.email);
 
       // Check if this user is an admin using both id and email
-      const { count: countById, error: adminErrorById } = await supabase
+      const { data: adminDataById, error: adminErrorById } = await supabase
         .from("admin_users")
-        .select("*", { count: 'exact', head: true })
+        .select("*")
         .eq("id", session.user.id);
 
-      const { count: countByEmail, error: adminErrorByEmail } = await supabase
+      const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
         .from("admin_users")
-        .select("*", { count: 'exact', head: true })
+        .select("*")
         .eq("email", session.user.email);
+
+      console.log("Admin check by ID:", { adminDataById, adminErrorById });
+      console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
 
       if (adminErrorById || adminErrorByEmail) {
         console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
@@ -54,8 +57,10 @@ export const useAdminAuth = () => {
       }
 
       // Check if user is admin by either ID or email
-      const isAdminById = !adminErrorById && countById && countById > 0;
-      const isAdminByEmail = !adminErrorByEmail && countByEmail && countByEmail > 0;
+      const isAdminById = !adminErrorById && adminDataById && adminDataById.length > 0;
+      const isAdminByEmail = !adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0;
+
+      console.log("Admin status:", { isAdminById, isAdminByEmail });
 
       if (!isAdminById && !isAdminByEmail) {
         console.log("User is not an admin");
