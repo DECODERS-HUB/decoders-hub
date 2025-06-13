@@ -83,8 +83,8 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Poppins', 'system-ui', 'sans-serif'],
-				heading: ['Montserrat', 'system-ui', 'sans-serif'],
+				sans: ['Signika Negative', 'system-ui', 'sans-serif'],
+				heading: ['Signika Negative', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
