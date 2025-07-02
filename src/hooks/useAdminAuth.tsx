@@ -9,72 +9,80 @@ export const useAdminAuth = () => {
   const { toast } = useToast();
   const [session, setSession] = useState<any>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkAuth = async () => {
       console.log("Checking authentication...");
       
-      const { data: sessionData } = await supabase.auth.getSession();
-      const session = sessionData?.session;
-      setSession(session);
+      try {
+        const { data: sessionData } = await supabase.auth.getSession();
+        const session = sessionData?.session;
+        setSession(session);
 
-      if (!session) {
-        console.log("No session found, redirecting to auth");
+        if (!session) {
+          console.log("No session found, redirecting to auth");
+          toast({
+            title: "Authentication required",
+            description: "Please login to access the admin dashboard.",
+            variant: "destructive",
+          });
+          navigate("/auth");
+          setLoading(false);
+          return;
+        }
+
+        console.log("Session found for user:", session.user.id, "email:", session.user.email);
+
+        // Check if this user is an admin
+        const { data: adminData, error: adminError } = await supabase
+          .from("admin_users")
+          .select("*")
+          .or(`id.eq.${session.user.id},email.eq.${session.user.email}`)
+          .limit(1);
+
+        console.log("Admin check result:", { adminData, adminError });
+
+        if (adminError) {
+          console.error("Error checking admin status:", adminError);
+          toast({
+            title: "Database Error",
+            description: "Failed to verify admin access. Please try again.",
+            variant: "destructive",
+          });
+          navigate("/auth");
+          setLoading(false);
+          return;
+        }
+
+        const isUserAdmin = adminData && adminData.length > 0;
+        console.log("User admin status:", isUserAdmin);
+
+        if (!isUserAdmin) {
+          console.log("User is not an admin");
+          toast({
+            title: "Access Denied",
+            description: "You don't have permission to access this area. Please contact the administrator to grant you access.",
+            variant: "destructive",
+          });
+          navigate("/");
+          setLoading(false);
+          return;
+        }
+
+        console.log("User is admin, proceeding to load dashboard");
+        setIsAdmin(true);
+      } catch (error) {
+        console.error("Auth check error:", error);
         toast({
-          title: "Authentication required",
-          description: "Please login to access the admin dashboard.",
+          title: "Authentication Error",
+          description: "An error occurred while checking your access. Please try again.",
           variant: "destructive",
         });
         navigate("/auth");
-        return;
+      } finally {
+        setLoading(false);
       }
-
-      console.log("Session found for user:", session.user.id, "email:", session.user.email);
-
-      // Check if this user is an admin using both id and email
-      const { data: adminDataById, error: adminErrorById } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("id", session.user.id);
-
-      const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("email", session.user.email);
-
-      console.log("Admin check by ID:", { adminDataById, adminErrorById });
-      console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
-
-      if (adminErrorById || adminErrorByEmail) {
-        console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
-        toast({
-          title: "Database Error",
-          description: "Failed to verify admin access. Please try again.",
-          variant: "destructive",
-        });
-        navigate("/auth");
-        return;
-      }
-
-      // Check if user is admin by either ID or email
-      const isAdminById = !adminErrorById && adminDataById && adminDataById.length > 0;
-      const isAdminByEmail = !adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0;
-
-      console.log("Admin status:", { isAdminById, isAdminByEmail });
-
-      if (!isAdminById && !isAdminByEmail) {
-        console.log("User is not an admin");
-        toast({
-          title: "Access Denied",
-          description: "You don't have permission to access this area. Please contact the administrator to grant you access.",
-          variant: "destructive",
-        });
-        navigate("/");
-        return;
-      }
-
-      console.log("User is admin, proceeding to load dashboard");
-      setIsAdmin(true);
     };
 
     checkAuth();
@@ -84,9 +92,14 @@ export const useAdminAuth = () => {
         console.log("Auth state changed:", event);
         if (event === "SIGNED_OUT") {
           console.log("User signed out, redirecting to auth");
+          setSession(null);
+          setIsAdmin(false);
           navigate("/auth");
+        } else if (event === "SIGNED_IN" && session) {
+          setSession(session);
+          // Re-check admin status when user signs in
+          checkAuth();
         }
-        setSession(session);
       }
     );
 
@@ -97,13 +110,18 @@ export const useAdminAuth = () => {
 
   const handleLogout = async () => {
     console.log("Logging out user");
+    setLoading(true);
     await supabase.auth.signOut();
+    setSession(null);
+    setIsAdmin(false);
     navigate("/auth");
+    setLoading(false);
   };
 
   return {
     session,
     isAdmin,
+    loading,
     handleLogout,
   };
 };

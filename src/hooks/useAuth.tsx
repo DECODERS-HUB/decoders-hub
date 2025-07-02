@@ -11,29 +11,27 @@ export const useAuth = () => {
 
   useEffect(() => {
     const checkSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        console.log("Session found, checking admin status");
-        
-        // Check admin status by both ID and email
-        const { data: adminDataById, error: adminErrorById } = await supabase
-          .from("admin_users")
-          .select("*")
-          .eq("id", data.session.user.id);
-
-        const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
-          .from("admin_users")
-          .select("*")
-          .eq("email", data.session.user.email);
+      try {
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          console.log("Session found, checking admin status");
           
-        console.log("Admin check by ID:", { adminDataById, adminErrorById });
-        console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
-          
-        if ((!adminErrorById && adminDataById && adminDataById.length > 0) || 
-            (!adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0)) {
-          console.log("User is admin, redirecting to dashboard");
-          navigate("/admin");
+          // Check admin status
+          const { data: adminData, error: adminError } = await supabase
+            .from("admin_users")
+            .select("*")
+            .or(`id.eq.${data.session.user.id},email.eq.${data.session.user.email}`)
+            .limit(1);
+            
+          console.log("Admin check:", { adminData, adminError });
+            
+          if (!adminError && adminData && adminData.length > 0) {
+            console.log("User is admin, redirecting to dashboard");
+            navigate("/admin");
+          }
         }
+      } catch (error) {
+        console.error("Session check error:", error);
       }
     };
     
@@ -67,33 +65,19 @@ export const useAuth = () => {
       console.log("Login successful for user:", data.user?.id, "email:", data.user?.email);
       
       if (data.user) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // First, let's check what's in the admin_users table
-        const { data: allAdmins, error: allAdminsError } = await supabase
-          .from("admin_users")
-          .select("*");
-        
-        console.log("All admin users in database:", allAdmins, allAdminsError);
-        
-        // Check admin status by both ID and email
-        const { data: adminDataById, error: adminErrorById } = await supabase
+        // Check admin status
+        const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("*")
-          .eq("id", data.user.id);
-
-        const { data: adminDataByEmail, error: adminErrorByEmail } = await supabase
-          .from("admin_users")
-          .select("*")
-          .eq("email", data.user.email);
+          .or(`id.eq.${data.user.id},email.eq.${data.user.email}`)
+          .limit(1);
         
         console.log("User ID from session:", data.user.id);
         console.log("User email from session:", data.user.email);
-        console.log("Admin check by ID:", { adminDataById, adminErrorById });
-        console.log("Admin check by email:", { adminDataByEmail, adminErrorByEmail });
+        console.log("Admin check result:", { adminData, adminError });
         
-        if (adminErrorById && adminErrorByEmail) {
-          console.error("Error checking admin status:", adminErrorById || adminErrorByEmail);
+        if (adminError) {
+          console.error("Error checking admin status:", adminError);
           toast({
             title: "Database Error",
             description: "Failed to verify admin status. Please try again.",
@@ -103,13 +87,10 @@ export const useAuth = () => {
           return;
         }
         
-        // Check if user is admin by either ID or email
-        const isAdminById = !adminErrorById && adminDataById && adminDataById.length > 0;
-        const isAdminByEmail = !adminErrorByEmail && adminDataByEmail && adminDataByEmail.length > 0;
+        const isUserAdmin = adminData && adminData.length > 0;
+        console.log("User admin status:", isUserAdmin);
         
-        console.log("Admin status:", { isAdminById, isAdminByEmail });
-        
-        if (!isAdminById && !isAdminByEmail) {
+        if (!isUserAdmin) {
           console.log("User is not an admin, signing out");
           await supabase.auth.signOut();
           toast({
@@ -152,9 +133,14 @@ export const useAuth = () => {
     console.log("Attempting signup for:", formData.email);
     
     try {
+      const redirectUrl = `${window.location.origin}/auth`;
+      
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
+        options: {
+          emailRedirectTo: redirectUrl
+        }
       });
       
       if (error) {
