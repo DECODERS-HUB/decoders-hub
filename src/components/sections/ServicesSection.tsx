@@ -4,34 +4,54 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  BookOpen, Code, Laptop, PenTool, Users
+  Briefcase, ChartBar, Bulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap
 } from "lucide-react";
 
 const services = [
   {
-    title: "Tech Training",
-    description: "Comprehensive technical training programs customized to enhance your team's skills and capabilities.",
-    icon: <BookOpen className="h-12 w-12 text-accent1-400" />,
+    title: "Business Strategy & Planning",
+    description: "Comprehensive strategic planning to design your business model and drive sustainable growth.",
+    icon: <Briefcase className="h-12 w-12 text-accent1-400" />,
   },
   {
-    title: "Branding",
-    description: "Strategic branding solutions that establish a powerful market presence and connect with your audience.",
-    icon: <PenTool className="h-12 w-12 text-accent1-400" />,
+    title: "Financial Advisory",
+    description: "Expert financial guidance to optimize costs, improve profitability, and secure funding.",
+    icon: <ChartBar className="h-12 w-12 text-accent1-400" />,
   },
   {
-    title: "IT Mentorship",
-    description: "Personalized mentoring programs to guide professionals and organizations through technological growth.",
+    title: "Branding & Marketing",
+    description: "Strategic brand development and marketing solutions to enhance your market presence.",
+    icon: <Bulb className="h-12 w-12 text-accent1-400" />,
+  },
+  {
+    title: "Operations & Process Optimization",
+    description: "Streamline operations and automate workflows to maximize organizational efficiency.",
+    icon: <Wrench className="h-12 w-12 text-accent1-400" />,
+  },
+  {
+    title: "Leadership & Team Development",
+    description: "Build strong leadership capabilities and foster high-performing team cultures.",
     icon: <Users className="h-12 w-12 text-accent1-400" />,
   },
   {
-    title: "Software Development",
-    description: "Custom software and application development to address your specific business challenges.",
-    icon: <Code className="h-12 w-12 text-accent1-400" />,
+    title: "Technology & Digital Transformation",
+    description: "Navigate digital transformation with strategic technology integration and automation.",
+    icon: <Handshake className="h-12 w-12 text-accent1-400" />,
   },
   {
-    title: "Business Consultancy",
-    description: "Expert consultation to optimize operations, increase efficiency, and drive sustainable growth.",
-    icon: <Laptop className="h-12 w-12 text-accent1-400" />,
+    title: "Legal & Compliance Advisory",
+    description: "Ensure regulatory compliance and proper business structuring with expert legal guidance.",
+    icon: <Gavel className="h-12 w-12 text-accent1-400" />,
+  },
+  {
+    title: "Startup & Innovation Support",
+    description: "Comprehensive support for startups from ideation to market launch and scaling.",
+    icon: <Rocket className="h-12 w-12 text-accent1-400" />,
+  },
+  {
+    title: "Training & Capacity Building",
+    description: "Develop your team's capabilities through targeted training and skill development programs.",
+    icon: <GraduationCap className="h-12 w-12 text-accent1-400" />,
   },
 ];
 
@@ -57,10 +77,10 @@ const ServicesSection = () => {
     <section className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="section-title">Our Services</h2>
+          <h2 className="section-title">Our Business Consultancy Services</h2>
           <p className="section-subtitle mx-auto">
-            We provide comprehensive technology and business solutions tailored to meet
-            your organization's specific needs and goals.
+            We provide comprehensive business consultancy solutions tailored to help
+            your organization achieve sustainable growth and operational excellence.
           </p>
         </div>
 
