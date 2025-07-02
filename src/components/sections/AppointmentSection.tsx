@@ -15,10 +15,10 @@ const AppointmentSection = () => {
       <div className="container-custom relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Schedule a Consultation with Our Experts</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Schedule a Business Consultation with Our Experts</h2>
             <p className="text-lg text-gray-600 mb-8">
-              Take the first step toward transforming your business with our technology expertise.
-              Book a consultation to discuss your needs and discover tailored solutions.
+              Take the first step toward transforming your business with our expert consultancy services.
+              Book a consultation to discuss your needs and discover tailored business solutions.
             </p>
             
             <div className="space-y-6">
@@ -48,7 +48,7 @@ const AppointmentSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Personalized Consultation</h3>
-                  <p className="text-gray-600">One-on-one attention with our experienced consultants</p>
+                  <p className="text-gray-600">One-on-one attention with our experienced business consultants</p>
                 </div>
               </div>
               
@@ -58,7 +58,7 @@ const AppointmentSection = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg mb-1">Follow-up Report</h3>
-                  <p className="text-gray-600">Detailed post-consultation summary and recommendations</p>
+                  <p className="text-gray-600">Detailed post-consultation summary and strategic recommendations</p>
                 </div>
               </div>
             </div>
@@ -66,17 +66,21 @@ const AppointmentSection = () => {
           
           <div className="bg-white rounded-xl overflow-hidden shadow-xl">
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-brand-800 mb-6">Book Your Appointment</h3>
+              <h3 className="text-2xl font-bold text-brand-800 mb-6">Book Your Business Consultation</h3>
               
               <div className="space-y-6 text-left">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Service</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Select Consultancy Service</label>
                   <select className="w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-brand-500">
-                    <option value="tech-training">Tech Training</option>
-                    <option value="branding">Branding</option>
-                    <option value="it-mentorship">IT Mentorship</option>
-                    <option value="software-development">Software Development</option>
-                    <option value="business-consultancy">Business Consultancy</option>
+                    <option value="business-strategy">Business Strategy & Planning</option>
+                    <option value="financial-advisory">Financial Advisory</option>
+                    <option value="branding-marketing">Branding & Marketing</option>
+                    <option value="operations-optimization">Operations & Process Optimization</option>
+                    <option value="leadership-development">Leadership & Team Development</option>
+                    <option value="digital-transformation">Technology & Digital Transformation</option>
+                    <option value="legal-compliance">Legal & Compliance Advisory</option>
+                    <option value="startup-support">Startup & Innovation Support</option>
+                    <option value="training-development">Training & Capacity Building</option>
                   </select>
                 </div>
                 

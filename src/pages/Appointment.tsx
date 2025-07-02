@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { format, addDays, startOfWeek, eachDayOfInterval, isSameDay } from "date-fns";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,36 +27,60 @@ const timeSlots = [
   "04:00 PM",
 ];
 
-// Service options
+// Service options - Updated for Business Consultancy
 const services = [
   {
-    id: "tech-training",
-    name: "Tech Training",
-    description: "Customized technical training for your team",
+    id: "business-strategy",
+    name: "Business Strategy & Planning",
+    description: "Comprehensive strategic planning to design your business model and drive sustainable growth.",
+    duration: "90 min",
+  },
+  {
+    id: "financial-advisory",
+    name: "Financial Advisory",
+    description: "Expert financial guidance to optimize costs, improve profitability, and secure funding.",
+    duration: "75 min",
+  },
+  {
+    id: "branding-marketing",
+    name: "Branding & Marketing",
+    description: "Strategic brand development and marketing solutions to enhance your market presence.",
     duration: "60 min",
   },
   {
-    id: "branding",
-    name: "Branding",
-    description: "Strategic branding and design solutions",
-    duration: "45 min",
+    id: "operations-optimization",
+    name: "Operations & Process Optimization",
+    description: "Streamline operations and automate workflows to maximize organizational efficiency.",
+    duration: "75 min",
   },
   {
-    id: "it-mentorship",
-    name: "IT Mentorship",
-    description: "Personalized guidance from industry experts",
+    id: "leadership-development",
+    name: "Leadership & Team Development",
+    description: "Build strong leadership capabilities and foster high-performing team cultures.",
+    duration: "90 min",
+  },
+  {
+    id: "digital-transformation",
+    name: "Technology & Digital Transformation",
+    description: "Navigate digital transformation with strategic technology integration and automation.",
+    duration: "75 min",
+  },
+  {
+    id: "legal-compliance",
+    name: "Legal & Compliance Advisory",
+    description: "Ensure regulatory compliance and proper business structuring with expert legal guidance.",
     duration: "60 min",
   },
   {
-    id: "software-development",
-    name: "Software Development",
-    description: "Custom software solutions for your business",
-    duration: "45 min",
+    id: "startup-support",
+    name: "Startup & Innovation Support",
+    description: "Comprehensive support for startups from ideation to market launch and scaling.",
+    duration: "90 min",
   },
   {
-    id: "business-consultancy",
-    name: "Business Consultancy",
-    description: "Expert business advice and strategy",
+    id: "training-development",
+    name: "Training & Capacity Building",
+    description: "Develop your team's capabilities through targeted training and skill development programs.",
     duration: "60 min",
   },
 ];
@@ -215,9 +238,9 @@ const Appointment = () => {
         <section className="pt-32 pb-16 bg-gradient-to-br from-gray-50 via-white to-gray-50 text-brand-800">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Book an Appointment</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Book a Business Consultation</h1>
               <p className="text-xl text-gray-700">
-                Schedule a consultation with our experts to discuss your technology and business needs.
+                Schedule a consultation with our business experts to discuss your growth and strategic needs.
               </p>
             </div>
           </div>
@@ -268,7 +291,7 @@ const Appointment = () => {
                 {/* Step 1: Service Selection */}
                 {currentStep === 1 && (
                   <div>
-                    <h2 className="text-2xl font-bold mb-6 text-brand-800">Select a Service</h2>
+                    <h2 className="text-2xl font-bold mb-6 text-brand-800">Select a Consultancy Service</h2>
                     <div className="space-y-4">
                       {services.map((service) => (
                         <div
@@ -465,12 +488,12 @@ const Appointment = () => {
                           value={formData.notes}
                           onChange={handleInputChange}
                           className="w-full rounded-lg border border-gray-300 py-3 px-4 focus:outline-none focus:ring-2 focus:ring-brand-500"
-                          placeholder="Please share any specific topics or questions you'd like to discuss during your appointment."
+                          placeholder="Please share any specific topics or questions you'd like to discuss during your consultation."
                         ></textarea>
                       </div>
                       
                       <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <h3 className="font-medium mb-2">Appointment Summary</h3>
+                        <h3 className="font-medium mb-2">Consultation Summary</h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center">
                             <CalendarPlus className="h-4 w-4 text-brand-600 mr-2" />
@@ -509,9 +532,9 @@ const Appointment = () => {
                     <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                       <Check className="h-10 w-10 text-green-600" />
                     </div>
-                    <h2 className="text-2xl font-bold mb-4 text-brand-800">Appointment Confirmed!</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-brand-800">Consultation Confirmed!</h2>
                     <p className="text-gray-600 mb-8">
-                      Your appointment has been scheduled successfully. A confirmation email has been sent to {formData.email} with all the details.
+                      Your business consultation has been scheduled successfully. A confirmation email has been sent to {formData.email} with all the details.
                     </p>
                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 max-w-sm mx-auto mb-8">
                       <div className="text-left space-y-3">
@@ -541,10 +564,10 @@ BEGIN:VEVENT
 DTSTART:${date ? format(date, "yyyyMMdd") : ""}T${selectedTime ? selectedTime.replace(/\s/g, "").replace(/AM|PM/g, "") : ""}00
 DTEND:${date ? format(date, "yyyyMMdd") : ""}T${selectedTime ? selectedTime.replace(/\s/g, "").replace(/AM|PM/g, "") : ""}00
 SUMMARY:${selectedService.name} with DecodersHub
-DESCRIPTION:Your appointment with DecodersHub for ${selectedService.name}
+DESCRIPTION:Your business consultation with DecodersHub for ${selectedService.name}
 LOCATION:123 Business Avenue, Tech City
 END:VEVENT
-END:VCALENDAR`} download="appointment.ics">
+END:VCALENDAR`} download="consultation.ics">
                           Add to Calendar
                         </a>
                       </Button>
