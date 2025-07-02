@@ -1,10 +1,9 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { 
-  Briefcase, ChartBar, Bulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap
+  Briefcase, ChartBar, Lightbulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap
 } from "lucide-react";
 
 const services = [
@@ -21,7 +20,7 @@ const services = [
   {
     title: "Branding & Marketing",
     description: "Strategic brand development and marketing solutions to enhance your market presence.",
-    icon: <Bulb className="h-12 w-12 text-accent1-400" />,
+    icon: <Lightbulb className="h-12 w-12 text-accent1-400" />,
   },
   {
     title: "Operations & Process Optimization",

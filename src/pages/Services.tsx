@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import AIChat from "@/components/ui/AIChat";
-import { Briefcase, ChartBar, Bulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap, Check } from "lucide-react";
+import { Briefcase, ChartBar, Lightbulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap, Check } from "lucide-react";
 
 const Services = () => {
   useEffect(() => {
@@ -43,7 +43,7 @@ const Services = () => {
       id: "branding-marketing",
       title: "Branding & Marketing",
       description: "Strategic brand development and comprehensive marketing solutions to enhance your market presence and drive customer acquisition.",
-      icon: <Bulb className="h-16 w-16 text-accent1-400" />,
+      icon: <Lightbulb className="h-16 w-16 text-accent1-400" />,
       features: [
         "Brand Identity Development",
         "Marketing Strategy & Execution",
