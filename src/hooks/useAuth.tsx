@@ -65,11 +65,11 @@ export const useAuth = () => {
       console.log("Login successful for user:", data.user?.id, "email:", data.user?.email);
       
       if (data.user) {
-        // Check admin status
+        // Check admin status - Query 'admin_users' where user_id = supabase.user.id
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("*")
-          .or(`id.eq.${data.user.id},email.eq."${data.user.email}"`)
+          .eq("id", data.user.id)
           .limit(1);
         
         console.log("User ID from session:", data.user.id);
@@ -87,18 +87,24 @@ export const useAuth = () => {
           return;
         }
         
+        // If adminCheck.data.length > 0
         const isUserAdmin = adminData && adminData.length > 0;
         console.log("User admin status:", isUserAdmin);
         
         if (!isUserAdmin) {
+          // Show Toast/Alert: You are not authorized as an admin
           console.log("User is not an admin, signing out");
-          await supabase.auth.signOut();
           toast({
             title: "Access Denied",
-            description: "You don't have permission to access the admin area. Please contact the administrator to grant you access.",
+            description: "You are not authorized as an admin",
             variant: "destructive",
           });
+          // Supabase - Sign Out
+          await supabase.auth.signOut();
+          // Navigate to /auth
+          navigate("/auth");
         } else {
+          // Navigate to /admin (dashboard)
           console.log("User is admin, proceeding to dashboard");
           toast({
             title: "Login Successful",

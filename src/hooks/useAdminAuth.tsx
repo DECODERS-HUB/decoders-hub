@@ -34,11 +34,11 @@ export const useAdminAuth = () => {
 
         console.log("Session found for user:", session.user.id, "email:", session.user.email);
 
-        // Check if this user is an admin
+        // Check if this user is an admin - Query 'admin_users' where user_id = supabase.user.id
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("*")
-          .or(`id.eq.${session.user.id},email.eq."${session.user.email}"`)
+          .eq("id", session.user.id)
           .limit(1);
 
         console.log("Admin check result:", { adminData, adminError });
