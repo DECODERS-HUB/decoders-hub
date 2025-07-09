@@ -20,7 +20,7 @@ export const useAuth = () => {
           const { data: adminData, error: adminError } = await supabase
             .from("admin_users")
             .select("*")
-            .or(`id.eq.${data.session.user.id},email.eq.${data.session.user.email}`)
+            .or(`id.eq.${data.session.user.id},email.eq."${data.session.user.email}"`)
             .limit(1);
             
           console.log("Admin check:", { adminData, adminError });
@@ -69,7 +69,7 @@ export const useAuth = () => {
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("*")
-          .or(`id.eq.${data.user.id},email.eq.${data.user.email}`)
+          .or(`id.eq.${data.user.id},email.eq."${data.user.email}"`)
           .limit(1);
         
         console.log("User ID from session:", data.user.id);

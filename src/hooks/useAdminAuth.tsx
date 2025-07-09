@@ -38,7 +38,7 @@ export const useAdminAuth = () => {
         const { data: adminData, error: adminError } = await supabase
           .from("admin_users")
           .select("*")
-          .or(`id.eq.${session.user.id},email.eq.${session.user.email}`)
+          .or(`id.eq.${session.user.id},email.eq."${session.user.email}"`)
           .limit(1);
 
         console.log("Admin check result:", { adminData, adminError });
