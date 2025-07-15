@@ -4,11 +4,13 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AppointmentTable from "@/components/admin/AppointmentTable";
 import AppointmentFilters from "@/components/admin/AppointmentFilters";
+import BlogManager from "@/components/admin/BlogManager";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Button } from "@/components/ui/button";
-import { LogOut, RefreshCw } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LogOut, RefreshCw, Calendar, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -188,30 +190,51 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-            <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
-              <div className="flex items-center gap-4">
-                <h2 className="text-xl font-semibold text-brand-800">
-                  Appointment Bookings
-                </h2>
-                {loading && <RefreshCw size={18} className="animate-spin" />}
+          <Tabs defaultValue="appointments" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="appointments" className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Appointments
+              </TabsTrigger>
+              <TabsTrigger value="blog" className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4" />
+                Blog Management
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="appointments" className="space-y-6">
+              <div className="bg-white rounded-xl shadow-md p-6">
+                <div className="flex flex-col md:flex-row justify-between gap-4 mb-6">
+                  <div className="flex items-center gap-4">
+                    <h2 className="text-xl font-semibold text-brand-800">
+                      Appointment Bookings
+                    </h2>
+                    {loading && <RefreshCw size={18} className="animate-spin" />}
+                  </div>
+
+                  <AppointmentFilters
+                    searchQuery={searchQuery}
+                    statusFilter={statusFilter}
+                    onSearchChange={setSearchQuery}
+                    onStatusChange={setStatusFilter}
+                  />
+                </div>
+
+                <AppointmentTable
+                  appointments={filteredAppointments}
+                  loading={loading}
+                  onViewDetails={viewAppointmentDetails}
+                  onUpdateStatus={updateAppointmentStatus}
+                />
               </div>
+            </TabsContent>
 
-              <AppointmentFilters
-                searchQuery={searchQuery}
-                statusFilter={statusFilter}
-                onSearchChange={setSearchQuery}
-                onStatusChange={setStatusFilter}
-              />
-            </div>
-
-            <AppointmentTable
-              appointments={filteredAppointments}
-              loading={loading}
-              onViewDetails={viewAppointmentDetails}
-              onUpdateStatus={updateAppointmentStatus}
-            />
-          </div>
+            <TabsContent value="blog" className="space-y-6">
+              <div className="bg-white rounded-xl shadow-md">
+                <BlogManager />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
 

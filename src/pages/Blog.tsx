@@ -1,104 +1,66 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import AIChat from "@/components/ui/AIChat";
 import { Search, Calendar } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "10 Technology Trends That Will Transform Businesses in 2025",
-    excerpt: "Discover the cutting-edge technologies that are set to revolutionize how businesses operate in the coming years.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Technology",
-    date: "Apr 15, 2025",
-    author: "Dr. Sarah Chen",
-    authorRole: "Chief Technology Officer"
-  },
-  {
-    id: 2,
-    title: "How Digital Transformation Is Reshaping Business Consultancy",
-    excerpt: "The rapid evolution of digital technologies is forcing consultancy firms to adapt their approach and service offerings.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Business",
-    date: "Mar 28, 2025",
-    author: "Michael Rodriguez",
-    authorRole: "Digital Transformation Lead"
-  },
-  {
-    id: 3,
-    title: "The Essential Skills Every Tech Professional Needs in 2025",
-    excerpt: "Beyond technical expertise, these are the critical skills that will set apart successful technology professionals.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Training",
-    date: "Mar 12, 2025",
-    author: "Alisha Patel",
-    authorRole: "Training Director"
-  },
-  {
-    id: 4,
-    title: "Building a Culture of Innovation in Traditional Industries",
-    excerpt: "How traditional industries can embrace technological innovation to stay competitive in the digital age.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Innovation",
-    date: "Feb 25, 2025",
-    author: "James Wilson",
-    authorRole: "Innovation Strategist"
-  },
-  {
-    id: 5,
-    title: "The Rise of AI-Powered Business Intelligence",
-    excerpt: "How artificial intelligence is revolutionizing how businesses collect, analyze, and act on data.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1488229297570-58520851e868?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Artificial Intelligence",
-    date: "Feb 10, 2025",
-    author: "Dr. Lucas Kim",
-    authorRole: "AI Research Lead"
-  },
-  {
-    id: 6,
-    title: "Cybersecurity Challenges in a Remote-First World",
-    excerpt: "As remote work becomes the norm, businesses face new cybersecurity challenges that require innovative solutions.",
-    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl. Sed euismod, nunc ut aliquam aliquam, nisl nunc aliquam nisl, eget aliquam nisl nunc eget nisl.",
-    imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80",
-    category: "Cybersecurity",
-    date: "Jan 22, 2025",
-    author: "Elena Vasquez",
-    authorRole: "Head of Cybersecurity"
-  },
-];
-
-const categories = [
-  "All",
-  "Technology",
-  "Business",
-  "Training",
-  "Innovation",
-  "Artificial Intelligence",
-  "Cybersecurity"
-];
+interface BlogPost {
+  id: string;
+  title: string;
+  content: string;
+  excerpt: string;
+  featured_image_url: string;
+  slug: string;
+  status: 'draft' | 'published' | 'archived';
+  author_name: string;
+  created_at: string;
+  published_at: string;
+}
 
 const Blog = () => {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     document.title = "Tech & Business Insights - DECODERS HUB";
+    fetchBlogPosts();
   }, []);
 
-  const [selectedCategory, setSelectedCategory] = React.useState("All");
-  const [searchQuery, setSearchQuery] = React.useState("");
-  
+  const fetchBlogPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('status', 'published')
+        .order('published_at', { ascending: false });
+
+      if (error) throw error;
+      setBlogPosts((data || []) as BlogPost[]);
+    } catch (error) {
+      console.error('Error fetching blog posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const filteredPosts = blogPosts.filter(post => {
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+                          (post.excerpt || '').toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
   });
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
   
   return (
     <div className="min-h-screen">
@@ -136,71 +98,55 @@ const Blog = () => {
                   />
                 </div>
                 
-                {/* Category Filter - Mobile */}
-                <div className="md:hidden mb-8">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
-                  >
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                {/* Category Filter - Desktop */}
-                <div className="hidden md:flex flex-wrap gap-2 mb-8">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-full text-sm font-medium ${
-                        selectedCategory === category
-                          ? "bg-brand-600 text-white"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
                 
                 {/* Blog Posts */}
                 <div className="space-y-10">
-                  {filteredPosts.length > 0 ? (
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">Loading blog posts...</p>
+                    </div>
+                  ) : filteredPosts.length > 0 ? (
                     filteredPosts.map((post) => (
                       <div key={post.id} className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
                         <div className="md:flex">
                           <div className="md:w-1/3">
-                            <img 
-                              src={post.imageUrl} 
-                              alt={post.title} 
-                              className="h-48 md:h-full w-full object-cover"
-                            />
+                            {post.featured_image_url ? (
+                              <img 
+                                src={post.featured_image_url} 
+                                alt={post.title} 
+                                className="h-48 md:h-full w-full object-cover"
+                              />
+                            ) : (
+                              <div className="h-48 md:h-full w-full bg-gradient-to-br from-brand-100 to-brand-200 flex items-center justify-center">
+                                <span className="text-brand-600 text-4xl font-bold">
+                                  {post.title.charAt(0)}
+                                </span>
+                              </div>
+                            )}
                           </div>
                           <div className="p-6 md:w-2/3">
                             <div className="flex items-center mb-2">
-                              <span className="text-sm font-medium text-accent1-400">{post.category}</span>
+                              <span className="text-sm font-medium text-accent1-400">Blog</span>
                               <span className="mx-2 text-gray-300">•</span>
                               <div className="flex items-center text-sm text-gray-500">
                                 <Calendar className="h-3 w-3 mr-1" />
-                                {post.date}
+                                {formatDate(post.published_at || post.created_at)}
                               </div>
                             </div>
                             <h2 className="font-bold text-xl mb-2 text-brand-800">{post.title}</h2>
-                            <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                            <p className="text-gray-600 mb-4">{post.excerpt || post.content.substring(0, 150) + '...'}</p>
                             <div className="flex items-center mb-4">
-                              <div className="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
+                              <div className="w-8 h-8 bg-brand-600 rounded-full mr-2 flex items-center justify-center">
+                                <span className="text-white text-sm font-bold">{post.author_name.charAt(0)}</span>
+                              </div>
                               <div className="text-sm">
-                                <p className="font-medium text-brand-800">{post.author}</p>
-                                <p className="text-gray-500">{post.authorRole}</p>
+                                <p className="font-medium text-brand-800">{post.author_name}</p>
+                                <p className="text-gray-500">Author</p>
                               </div>
                             </div>
                             <Button asChild variant="ghost" className="text-brand-600 hover:text-brand-700 p-0 hover:bg-transparent">
-                              <Link to={`/blog/${post.id}`}>Read full article →</Link>
+                              <Link to={`/blog/${post.slug}`}>Read full article →</Link>
                             </Button>
                           </div>
                         </div>
@@ -209,7 +155,7 @@ const Blog = () => {
                   ) : (
                     <div className="text-center py-12">
                       <h3 className="text-xl font-medium text-gray-600">No articles found</h3>
-                      <p className="text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
+                      <p className="text-gray-500 mt-2">No blog posts have been published yet</p>
                     </div>
                   )}
                 </div>
@@ -231,47 +177,30 @@ const Blog = () => {
                   </form>
                 </div>
                 
-                {/* Popular Posts */}
+                {/* Recent Posts */}
                 <div className="bg-white rounded-xl p-6 shadow-md">
-                  <h3 className="text-xl font-bold mb-4 text-brand-800">Popular Articles</h3>
+                  <h3 className="text-xl font-bold mb-4 text-brand-800">Recent Articles</h3>
                   <div className="space-y-4">
                     {blogPosts.slice(0, 3).map((post) => (
-                      <Link to={`/blog/${post.id}`} key={post.id} className="flex gap-4 group">
+                      <Link to={`/blog/${post.slug}`} key={post.id} className="flex gap-4 group">
                         <div className="w-16 h-16 flex-shrink-0 rounded overflow-hidden">
-                          <img 
-                            src={post.imageUrl} 
-                            alt={post.title} 
-                            className="w-full h-full object-cover"
-                          />
+                          {post.featured_image_url ? (
+                            <img 
+                              src={post.featured_image_url} 
+                              alt={post.title} 
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-brand-100 flex items-center justify-center">
+                              <span className="text-brand-600 font-bold">{post.title.charAt(0)}</span>
+                            </div>
+                          )}
                         </div>
                         <div>
                           <h4 className="font-medium text-gray-800 group-hover:text-brand-600 transition-colors line-clamp-2">{post.title}</h4>
-                          <p className="text-sm text-gray-500">{post.date}</p>
+                          <p className="text-sm text-gray-500">{formatDate(post.published_at || post.created_at)}</p>
                         </div>
                       </Link>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Categories */}
-                <div className="bg-white rounded-xl p-6 shadow-md">
-                  <h3 className="text-xl font-bold mb-4 text-brand-800">Categories</h3>
-                  <div className="space-y-2">
-                    {categories.slice(1).map((category) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`flex items-center justify-between w-full px-3 py-2 rounded-lg ${
-                          selectedCategory === category
-                            ? "bg-brand-100 text-brand-700"
-                            : "hover:bg-gray-50"
-                        }`}
-                      >
-                        <span>{category}</span>
-                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
-                          {blogPosts.filter(post => post.category === category).length}
-                        </span>
-                      </button>
                     ))}
                   </div>
                 </div>
