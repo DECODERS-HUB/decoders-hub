@@ -8,33 +8,33 @@ import {
 
 const services = [
   {
-    title: "Brand Identity",
-    description: "Creating distinctive visual identities that capture your brand's essence and connect with your audience.",
-    icon: <Lightbulb className="h-8 w-8 text-foreground" />,
-  },
-  {
-    title: "Web Design & Development",
-    description: "Modern, responsive websites that deliver exceptional user experiences across all devices.",
+    title: "Business Strategy & Planning",
+    description: "Comprehensive strategic planning services to design sustainable business models and drive long-term growth.",
     icon: <Briefcase className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "UI/UX Design",
-    description: "Intuitive digital interfaces designed with user-centered principles and modern aesthetics.",
-    icon: <Users className="h-8 w-8 text-foreground" />,
-  },
-  {
-    title: "Digital Marketing",
-    description: "Strategic digital campaigns that build awareness and drive meaningful engagement.",
+    title: "Financial Advisory",
+    description: "Expert financial guidance to optimize costs, improve profitability, and secure funding for growth.",
     icon: <ChartBar className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Motion Graphics",
-    description: "Dynamic visual content that brings your brand to life through animation and storytelling.",
-    icon: <Rocket className="h-8 w-8 text-foreground" />,
+    title: "Branding & Marketing",
+    description: "Strategic brand development and comprehensive marketing solutions to enhance market presence.",
+    icon: <Lightbulb className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Creative Strategy",
-    description: "Comprehensive creative direction that aligns with your business goals and market positioning.",
+    title: "Operations & Process Optimization",
+    description: "Streamline operations and automate workflows to maximize organizational efficiency.",
+    icon: <Wrench className="h-8 w-8 text-foreground" />,
+  },
+  {
+    title: "Leadership & Team Development",
+    description: "Build strong leadership capabilities and foster high-performing team cultures.",
+    icon: <Users className="h-8 w-8 text-foreground" />,
+  },
+  {
+    title: "Digital Transformation",
+    description: "Navigate digital transformation with strategic technology integration and automation solutions.",
     icon: <Handshake className="h-8 w-8 text-foreground" />,
   },
 ];
@@ -60,11 +60,11 @@ const ServicesSection = () => {
       <div className="container-custom">
         <div className="mb-20">
           <h2 className="text-4xl md:text-5xl font-light text-foreground mb-6">
-            What we create
+            What we deliver
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            We partner with forward-thinking brands to create meaningful digital experiences 
-            that resonate with audiences and drive business growth.
+            We partner with ambitious businesses to deliver strategic solutions 
+            that drive sustainable growth and operational excellence.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ const ServicesSection = () => {
 
         <div className="mt-20 text-center">
           <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background font-normal rounded-full px-8">
-            <Link to="/services">View All Work</Link>
+            <Link to="/services">View All Services</Link>
           </Button>
         </div>
       </div>

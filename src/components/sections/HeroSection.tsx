@@ -10,10 +10,10 @@ const HeroSection = () => {
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-2 md:order-1">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-8 text-foreground">
-              We craft <span className="font-medium">digital experiences</span> that inspire
+              We transform <span className="font-medium">businesses</span> through strategic innovation
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-              A creative agency focused on brand identity, digital design, and innovative web solutions
+              Comprehensive business consultancy services designed to drive sustainable growth and operational excellence
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
               <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background font-normal rounded-full px-8">
