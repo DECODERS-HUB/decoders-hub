@@ -8,49 +8,34 @@ import {
 
 const services = [
   {
-    title: "Business Strategy & Planning",
-    description: "Comprehensive strategic planning to design your business model and drive sustainable growth.",
-    icon: <Briefcase className="h-12 w-12 text-accent1-400" />,
+    title: "Brand Identity",
+    description: "Creating distinctive visual identities that capture your brand's essence and connect with your audience.",
+    icon: <Lightbulb className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Financial Advisory",
-    description: "Expert financial guidance to optimize costs, improve profitability, and secure funding.",
-    icon: <ChartBar className="h-12 w-12 text-accent1-400" />,
+    title: "Web Design & Development",
+    description: "Modern, responsive websites that deliver exceptional user experiences across all devices.",
+    icon: <Briefcase className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Branding & Marketing",
-    description: "Strategic brand development and marketing solutions to enhance your market presence.",
-    icon: <Lightbulb className="h-12 w-12 text-accent1-400" />,
+    title: "UI/UX Design",
+    description: "Intuitive digital interfaces designed with user-centered principles and modern aesthetics.",
+    icon: <Users className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Operations & Process Optimization",
-    description: "Streamline operations and automate workflows to maximize organizational efficiency.",
-    icon: <Wrench className="h-12 w-12 text-accent1-400" />,
+    title: "Digital Marketing",
+    description: "Strategic digital campaigns that build awareness and drive meaningful engagement.",
+    icon: <ChartBar className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Leadership & Team Development",
-    description: "Build strong leadership capabilities and foster high-performing team cultures.",
-    icon: <Users className="h-12 w-12 text-accent1-400" />,
+    title: "Motion Graphics",
+    description: "Dynamic visual content that brings your brand to life through animation and storytelling.",
+    icon: <Rocket className="h-8 w-8 text-foreground" />,
   },
   {
-    title: "Technology & Digital Transformation",
-    description: "Navigate digital transformation with strategic technology integration and automation.",
-    icon: <Handshake className="h-12 w-12 text-accent1-400" />,
-  },
-  {
-    title: "Legal & Compliance Advisory",
-    description: "Ensure regulatory compliance and proper business structuring with expert legal guidance.",
-    icon: <Gavel className="h-12 w-12 text-accent1-400" />,
-  },
-  {
-    title: "Startup & Innovation Support",
-    description: "Comprehensive support for startups from ideation to market launch and scaling.",
-    icon: <Rocket className="h-12 w-12 text-accent1-400" />,
-  },
-  {
-    title: "Training & Capacity Building",
-    description: "Develop your team's capabilities through targeted training and skill development programs.",
-    icon: <GraduationCap className="h-12 w-12 text-accent1-400" />,
+    title: "Creative Strategy",
+    description: "Comprehensive creative direction that aligns with your business goals and market positioning.",
+    icon: <Handshake className="h-8 w-8 text-foreground" />,
   },
 ];
 
@@ -58,14 +43,12 @@ const ServiceCard = ({ title, description, icon, index }: {
   title: string; description: string; icon: React.ReactNode; index: number;
 }) => {
   return (
-    <div 
-      className="bg-white/80 backdrop-blur-sm rounded-lg p-6 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 border border-gray-100"
-    >
-      <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-bold mb-2 text-brand-800">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <Button asChild variant="ghost" className="text-brand-600 hover:text-brand-700 p-0 hover:bg-transparent">
-        <Link to="/services">Learn more →</Link>
+    <div className="group p-8 transition-all duration-300 hover:bg-muted rounded-xl">
+      <div className="mb-6">{icon}</div>
+      <h3 className="text-xl font-medium mb-4 text-foreground">{title}</h3>
+      <p className="text-muted-foreground leading-relaxed mb-6">{description}</p>
+      <Button asChild variant="ghost" className="text-foreground hover:bg-transparent p-0 font-normal group-hover:translate-x-1 transition-transform">
+        <Link to="/services">View details →</Link>
       </Button>
     </div>
   );
@@ -73,17 +56,19 @@ const ServiceCard = ({ title, description, icon, index }: {
 
 const ServicesSection = () => {
   return (
-    <section className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <section className="py-32 bg-white">
       <div className="container-custom">
-        <div className="text-center mb-16">
-          <h2 className="section-title">Our Business Consultancy Services</h2>
-          <p className="section-subtitle mx-auto">
-            We provide comprehensive business consultancy solutions tailored to help
-            your organization achieve sustainable growth and operational excellence.
+        <div className="mb-20">
+          <h2 className="text-4xl md:text-5xl font-light text-foreground mb-6">
+            What we create
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+            We partner with forward-thinking brands to create meaningful digital experiences 
+            that resonate with audiences and drive business growth.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 border border-border rounded-2xl overflow-hidden">
           {services.map((service, index) => (
             <ServiceCard
               key={index}
@@ -95,9 +80,9 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <Button asChild size="lg" className="bg-brand-700 hover:bg-brand-800">
-            <Link to="/services">View All Services</Link>
+        <div className="mt-20 text-center">
+          <Button asChild size="lg" className="bg-foreground hover:bg-foreground/90 text-background font-normal rounded-full px-8">
+            <Link to="/services">View All Work</Link>
           </Button>
         </div>
       </div>
