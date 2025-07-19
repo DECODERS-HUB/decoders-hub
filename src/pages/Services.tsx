@@ -87,10 +87,10 @@ const Services = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-24 pb-16 bg-gradient-to-br from-blue-600 to-blue-800">
+      <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 to-green-50">
         <div className="container-custom text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Our Services
+            OUR SERVICES
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             Comprehensive business consulting solutions tailored to drive your success
