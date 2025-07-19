@@ -1,52 +1,64 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-background min-h-screen flex items-center pt-16">
+    <section className="relative bg-gradient-to-br from-blue-50 to-green-50 min-h-screen flex items-center pt-16">
       <div className="container-custom relative z-10 py-24">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="order-2 md:order-1">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-8 text-foreground">
-              We transform <span className="font-medium">businesses</span> through strategic innovation
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
+              Business Consultants<br />
+              <span className="text-blue-600">With a Growth Mindset</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed">
-              Comprehensive business consultancy services designed to drive sustainable growth and operational excellence
+            <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
+              We partner with ambitious businesses to deliver strategic solutions that drive sustainable growth and operational excellence through innovative consulting approaches.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6">
-              <Button asChild size="lg" className="bg-brand-600 hover:bg-brand-700 text-white font-normal rounded-full px-8">
-                <Link to="/appointment">Start a Project</Link>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-8">
+                <Link to="/appointment">Get Started</Link>
               </Button>
-              <Button asChild variant="ghost" size="lg" className="text-brand-800 hover:bg-brand-50 font-normal">
-                <Link to="/services">View Our Work</Link>
+              <Button asChild variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg px-8">
+                <Link to="/services">Learn More</Link>
               </Button>
-            </div>
-            
-            <div className="mt-16 grid grid-cols-3 gap-8 pt-8 border-t border-brand-200">
-              <div className="text-center">
-                <div className="text-2xl font-light text-brand-800 mb-1">150+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Projects</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-light text-brand-800 mb-1">8</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Years</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-light text-brand-800 mb-1">25+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-wider">Clients</div>
-              </div>
             </div>
           </div>
           
-          <div className="order-1 md:order-2 flex justify-center">
-            <div className="relative w-full max-w-md aspect-[4/5]">
-              <div className="absolute inset-0 bg-brand-100 rounded-2xl"></div>
-              <div className="relative z-10 p-8 h-full flex items-end">
-                <div className="w-full h-64 bg-gradient-to-br from-brand-600 to-accent1-400 rounded-xl opacity-90"></div>
-              </div>
+          <div className="relative">
+            <div className="grid grid-cols-2 gap-4">
+              {/* Top left - light blue */}
+              <div className="aspect-square bg-blue-100 rounded-3xl"></div>
+              {/* Top right - light green */}
+              <div className="aspect-square bg-green-200 rounded-3xl"></div>
+              {/* Bottom left - light green */}
+              <div className="aspect-square bg-green-100 rounded-3xl"></div>
+              {/* Bottom right - blue */}
+              <div className="aspect-square bg-blue-600 rounded-3xl"></div>
             </div>
+          </div>
+        </div>
+        
+        {/* Feature cards */}
+        <div className="mt-20 grid md:grid-cols-2 gap-6 max-w-4xl">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="font-semibold text-gray-900 mb-2">Transform Your Business</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Strategic planning and innovative solutions designed to drive sustainable growth and operational excellence for your organization.
+            </p>
+            <Button asChild variant="link" className="text-blue-600 p-0 h-auto mt-3 font-medium">
+              <Link to="/services">Read More</Link>
+            </Button>
+          </div>
+          
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="font-semibold text-gray-900 mb-2">Expert Guidance</h3>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              Comprehensive consultancy services from experienced professionals who understand the challenges of modern business growth.
+            </p>
+            <Button asChild variant="link" className="text-blue-600 p-0 h-auto mt-3 font-medium">
+              <Link to="/services">Read More</Link>
+            </Button>
           </div>
         </div>
       </div>
