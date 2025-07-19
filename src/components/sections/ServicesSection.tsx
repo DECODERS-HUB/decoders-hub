@@ -83,7 +83,7 @@ const ServicesSection = () => {
     <section className="py-32 bg-gray-50">
       <div className="container-custom">
         <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-16 text-center">
-          Our Business Consulting Services
+          OUR CONSULTING SERVICES
         </h2>
 
         <div className="grid lg:grid-cols-2 gap-0 bg-white rounded-2xl overflow-hidden shadow-lg">
