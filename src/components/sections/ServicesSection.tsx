@@ -1,89 +1,66 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { 
-  Briefcase, ChartBar, Lightbulb, Handshake, Users, Wrench, Gavel, Rocket, GraduationCap
-} from "lucide-react";
 
 const services = [
-  {
-    title: "Business Strategy & Planning",
-    description: "Comprehensive strategic planning services to design sustainable business models and drive long-term growth.",
-    icon: <Briefcase className="h-8 w-8 text-brand-600" />,
-  },
-  {
-    title: "Financial Advisory",
-    description: "Expert financial guidance to optimize costs, improve profitability, and secure funding for growth.",
-    icon: <ChartBar className="h-8 w-8 text-brand-600" />,
-  },
-  {
-    title: "Branding & Marketing",
-    description: "Strategic brand development and comprehensive marketing solutions to enhance market presence.",
-    icon: <Lightbulb className="h-8 w-8 text-brand-600" />,
-  },
-  {
-    title: "Operations & Process Optimization",
-    description: "Streamline operations and automate workflows to maximize organizational efficiency.",
-    icon: <Wrench className="h-8 w-8 text-brand-600" />,
-  },
-  {
-    title: "Leadership & Team Development",
-    description: "Build strong leadership capabilities and foster high-performing team cultures.",
-    icon: <Users className="h-8 w-8 text-brand-600" />,
-  },
-  {
-    title: "Digital Transformation",
-    description: "Navigate digital transformation with strategic technology integration and automation solutions.",
-    icon: <Handshake className="h-8 w-8 text-brand-600" />,
-  },
+  "Strategy Alignment & Architecture",
+  "Enterprise Portfolio & Program Management", 
+  "Experience Design",
+  "Human Capital Management – Workforce Management",
+  "Operational Excellence",
+  "People & Change"
 ];
-
-const ServiceCard = ({ title, description, icon, index }: { 
-  title: string; description: string; icon: React.ReactNode; index: number;
-}) => {
-  return (
-    <div className="group p-8 transition-all duration-300 hover:bg-brand-50 rounded-xl">
-      <div className="mb-6">{icon}</div>
-      <h3 className="text-xl font-medium mb-4 text-brand-800">{title}</h3>
-      <p className="text-muted-foreground leading-relaxed mb-6">{description}</p>
-      <Button asChild variant="ghost" className="text-brand-600 hover:bg-transparent p-0 font-normal group-hover:translate-x-1 transition-transform">
-        <Link to="/services">View details →</Link>
-      </Button>
-    </div>
-  );
-};
 
 const ServicesSection = () => {
   return (
-    <section className="py-32 bg-background">
+    <section className="py-32 bg-gray-50">
       <div className="container-custom">
-        <div className="mb-20">
-          <h2 className="text-4xl md:text-5xl font-light text-brand-800 mb-6">
-            What we deliver
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            We partner with ambitious businesses to deliver strategic solutions 
-            that drive sustainable growth and operational excellence.
-          </p>
-        </div>
+        <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-16 text-center">
+          Our Business Consulting Services
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 border border-brand-200 rounded-2xl overflow-hidden">
-          {services.map((service, index) => (
-            <ServiceCard
-              key={index}
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-              index={index}
-            />
-          ))}
-        </div>
+        <div className="grid lg:grid-cols-2 gap-0 bg-white rounded-2xl overflow-hidden shadow-lg">
+          {/* Services List */}
+          <div className="bg-gray-100 p-8 lg:p-12">
+            <div className="space-y-6">
+              {services.map((service, index) => (
+                <div 
+                  key={index}
+                  className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                >
+                  <h3 className="text-lg font-medium text-gray-800">
+                    {service}
+                  </h3>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <div className="mt-20 text-center">
-          <Button asChild size="lg" className="bg-brand-600 hover:bg-brand-700 text-white font-normal rounded-full px-8">
-            <Link to="/services">View All Services</Link>
-          </Button>
+          {/* Description Content */}
+          <div className="bg-slate-700 p-8 lg:p-12 text-white flex flex-col justify-center">
+            <div className="space-y-6">
+              <p className="text-xl leading-relaxed">
+                To guide your company toward its envisioned future, you need a road map.
+              </p>
+              
+              <p className="text-lg leading-relaxed opacity-90">
+                We'll help you understand your business and customer insights while developing a compelling vision, strategy and overall blueprint for driving competitive advantage.
+              </p>
+
+              <div className="pt-6">
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-slate-700 font-medium px-8"
+                >
+                  <Link to="/services">
+                    LEARN MORE →
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
