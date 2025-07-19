@@ -100,7 +100,7 @@ const BlogSection = () => {
     <section className="section-padding bg-gradient-to-br from-gray-50 via-white to-gray-50">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <h2 className="section-title">Latest Insights</h2>
+          <h2 className="section-title">LATEST INSIGHT</h2>
           <p className="section-subtitle mx-auto">
             Expert perspectives, industry analyses, and practical advice to help you navigate
             the evolving technology and business landscape.
