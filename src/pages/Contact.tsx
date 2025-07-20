@@ -34,7 +34,7 @@ const Contact = () => {
   };
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <main>
         {/* Hero Section */}
