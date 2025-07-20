@@ -1,6 +1,10 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import businessStrategy from "@/assets/hero-business-strategy.jpg";
+import digitalGrowth from "@/assets/hero-digital-growth.jpg";
+import teamCollaboration from "@/assets/hero-team-collaboration.jpg";
+import businessSuccess from "@/assets/hero-business-success.jpg";
 
 const HeroSection = () => {
   return (
@@ -27,14 +31,38 @@ const HeroSection = () => {
           
           <div className="relative">
             <div className="grid grid-cols-2 gap-4">
-              {/* Top left - light blue */}
-              <div className="aspect-square bg-blue-100 rounded-3xl"></div>
-              {/* Top right - light green */}
-              <div className="aspect-square bg-green-200 rounded-3xl"></div>
-              {/* Bottom left - light green */}
-              <div className="aspect-square bg-green-100 rounded-3xl"></div>
-              {/* Bottom right - blue */}
-              <div className="aspect-square bg-blue-600 rounded-3xl"></div>
+              {/* Top left - Business Strategy */}
+              <div className="aspect-square bg-blue-100 rounded-3xl overflow-hidden">
+                <img 
+                  src={businessStrategy} 
+                  alt="Business Strategy Meeting" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Top right - Digital Growth */}
+              <div className="aspect-square bg-green-200 rounded-3xl overflow-hidden">
+                <img 
+                  src={digitalGrowth} 
+                  alt="Digital Growth Analytics" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Bottom left - Team Collaboration */}
+              <div className="aspect-square bg-green-100 rounded-3xl overflow-hidden">
+                <img 
+                  src={teamCollaboration} 
+                  alt="Team Collaboration" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              {/* Bottom right - Business Success */}
+              <div className="aspect-square bg-blue-600 rounded-3xl overflow-hidden">
+                <img 
+                  src={businessSuccess} 
+                  alt="Business Success Analytics" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
