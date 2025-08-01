@@ -83,8 +83,8 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Signika Negative', 'system-ui', 'sans-serif'],
-				heading: ['Signika Negative', 'system-ui', 'sans-serif'],
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+				heading: ['Inter', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
