@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MapPin, Phone } from "lucide-react";
+import GoogleMap from "@/components/ui/GoogleMap";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -146,10 +147,7 @@ const ContactSection = () => {
             </div>
             
             <div className="h-64 md:h-80 rounded-lg overflow-hidden shadow-md">
-              {/* Placeholder for a map - in a real implementation, you would use Google Maps or similar */}
-              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-600">Google Maps Integration</span>
-              </div>
+              <GoogleMap className="rounded-lg" />
             </div>
           </div>
         </div>
