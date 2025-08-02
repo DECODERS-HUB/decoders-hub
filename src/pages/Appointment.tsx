@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { AddToCalendar } from "@/components/ui/AddToCalendar";
 import { useToast } from "@/hooks/use-toast";
 import AIChat from "@/components/ui/AIChat";
 import { supabase } from "@/integrations/supabase/client";
@@ -189,6 +190,26 @@ const Appointment = () => {
         });
         setIsSubmitting(false);
         return;
+      }
+      
+      // Add appointment to Google Calendar automatically
+      try {
+        const startDate = new Date(`${format(date, "yyyy-MM-dd")}T10:00:00`);
+        const endDate = new Date(`${format(date, "yyyy-MM-dd")}T11:00:00`);
+        
+        await supabase.functions.invoke('add-to-calendar', {
+          body: {
+            title: `Business Consultation - ${services[selectedService].name}`,
+            description: `Business consultation meeting with DecodersHQ.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            attendeeEmail: formData.email,
+            attendeeName: `${formData.firstName} ${formData.lastName}`
+          }
+        });
+      } catch (calendarError) {
+        console.log('Calendar integration not configured:', calendarError);
+        // Don't block the appointment if calendar fails
       }
       
       // If successful, move to confirmation step
@@ -517,6 +538,17 @@ const Appointment = () => {
                   <p className="text-lg text-gray-600 mb-8">
                     Your appointment for {services[selectedService].name} on {date && format(date, "PPP")} has been successfully booked.
                   </p>
+                  
+                  {/* Add to Calendar Component */}
+                  <div className="mb-8 text-left">
+                    <AddToCalendar
+                      title={`Business Consultation - ${services[selectedService].name}`}
+                      description={`Business consultation meeting with DecodersHQ.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`}
+                      startDate={date ? new Date(`${format(date, "yyyy-MM-dd")}T10:00:00`) : new Date()}
+                      endDate={date ? new Date(`${format(date, "yyyy-MM-dd")}T11:00:00`) : new Date()}
+                    />
+                  </div>
+                  
                   <div className="space-y-4">
                     <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 px-8">
                       <a href="/">Return to Home</a>
