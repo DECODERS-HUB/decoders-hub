@@ -84,42 +84,60 @@ export type Database = {
         Row: {
           author_id: string
           author_name: string
+          category: string | null
           content: string
           created_at: string
           excerpt: string | null
           featured_image_url: string | null
           id: string
+          is_featured: boolean | null
+          meta_description: string | null
+          meta_title: string | null
           published_at: string | null
+          reading_time_minutes: number | null
           slug: string
           status: string
+          tags: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
           author_id: string
           author_name: string
+          category?: string | null
           content: string
           created_at?: string
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
+          reading_time_minutes?: number | null
           slug: string
           status?: string
+          tags?: string[] | null
           title: string
           updated_at?: string
         }
         Update: {
           author_id?: string
           author_name?: string
+          category?: string | null
           content?: string
           created_at?: string
           excerpt?: string | null
           featured_image_url?: string | null
           id?: string
+          is_featured?: boolean | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
+          reading_time_minutes?: number | null
           slug?: string
           status?: string
+          tags?: string[] | null
           title?: string
           updated_at?: string
         }
@@ -130,7 +148,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_secret: {
+        Args: { secret_name: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
