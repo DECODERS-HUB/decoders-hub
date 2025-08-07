@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      quote: "Decoders HQ transformed our innovation model—we achieved 30% faster product rollout and significantly improved our market positioning.",
+      quote: "DECODERS HUB transformed our innovation model—we achieved 30% faster product rollout and significantly improved our market positioning.",
       author: "Sarah Chen",
       role: "CEO, TechForward Solutions"
     },

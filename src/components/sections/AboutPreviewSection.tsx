@@ -8,12 +8,12 @@ const AboutPreviewSection = () => {
       <div className="container-custom">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-8">
-            About Decoders HQ
+            ABOUT DECODERS HUB
           </h2>
           
           <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
             <p>
-              Decoders HQ is a strategic innovation firm helping businesses scale through tailored strategy, 
+              DECODERS HUB is a strategic innovation firm helping businesses scale through tailored strategy, 
               ecosystem-building, and hands-on execution. We've worked with founders, tech hubs, and institutions 
               to deliver sustainable, tech-enabled growth solutions.
             </p>

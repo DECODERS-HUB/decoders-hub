@@ -16,7 +16,7 @@ export const AddToCalendar: React.FC<AddToCalendarProps> = ({
   description,
   startDate,
   endDate,
-  location = 'DecodersHQ Office, Kwara State, Nigeria'
+  location = 'DECODERS HUB Office, Kwara State, Nigeria'
 }) => {
   // Format dates for different calendar services
   const formatDateForCalendar = (date: Date) => {
@@ -39,9 +39,9 @@ export const AddToCalendar: React.FC<AddToCalendarProps> = ({
   const generateICSFile = () => {
     const icsContent = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//DecodersHQ//Appointment//EN
+PRODID:-//DECODERS HUB//Appointment//EN
 BEGIN:VEVENT
-UID:${Date.now()}@decodershq.com
+UID:${Date.now()}@decodershub.com
 DTSTAMP:${formatDateForCalendar(new Date())}
 DTSTART:${startFormatted}
 DTEND:${endFormatted}

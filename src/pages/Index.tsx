@@ -14,9 +14,9 @@ import AIChat from "@/components/ui/AIChat";
 
 const Index = () => {
   useEffect(() => {
-    document.title = "Decoders HQ — Innovation. Strategy. Growth.";
+    document.title = "DECODERS HUB — Innovation. Strategy. Growth.";
     document.querySelector('meta[name="description"]')?.setAttribute('content', 
-      "Decoders HQ empowers startups, businesses, and communities with high-impact tech and innovation solutions. Strategic consulting, ecosystem evaluation, and digital product development."
+      "DECODERS HUB empowers startups, businesses, and communities with high-impact tech and innovation solutions. Strategic consulting, ecosystem evaluation, and digital product development."
     );
   }, []);
 

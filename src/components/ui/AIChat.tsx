@@ -14,7 +14,7 @@ type Message = {
 const initialMessages: Message[] = [
   {
     id: 1,
-    text: "Hello! I'm your DecodersHub AI assistant. How can I help you today?",
+    text: "Hello! I'm your DECODERS HUB AI assistant. How can I help you today?",
     sender: "bot",
     timestamp: new Date(),
   },
@@ -48,7 +48,7 @@ const AIChat: React.FC = () => {
     } else if (lowerCaseMessage.includes("remote") || lowerCaseMessage.includes("online") || lowerCaseMessage.includes("virtual")) {
       return "Yes, we offer remote consultations and services. Many of our clients prefer this option for convenience. Would you like to learn more about our remote service delivery?";
     } else if (lowerCaseMessage.includes("contact") || lowerCaseMessage.includes("reach")) {
-      return "You can reach us via email at info@decodershub.com, by phone at +1 (234) 567-890, or by filling out the contact form on our website. How would you prefer to get in touch?";
+      return "You can reach us via email at hub.decoders@gmail.com, by phone at +1 (234) 567-890, or by filling out the contact form on our website. How would you prefer to get in touch?";
     } else if (lowerCaseMessage.includes("location") || lowerCaseMessage.includes("address") || lowerCaseMessage.includes("office")) {
       return "Our main office is located at 123 Business Avenue, Tech City, TC 10011. We also have remote teams available to serve clients globally.";
     } else if (lowerCaseMessage.includes("thank")) {
@@ -137,7 +137,7 @@ const AIChat: React.FC = () => {
           <div className="flex items-center">
             <MessageCircle className="h-5 w-5 mr-2" />
             <div>
-              <h3 className="font-medium">DecodersHub Assistant</h3>
+              <h3 className="font-medium">DECODERS HUB Assistant</h3>
               <p className="text-xs text-green-300">Online</p>
             </div>
           </div>

@@ -200,7 +200,7 @@ const Appointment = () => {
         await supabase.functions.invoke('add-to-calendar', {
           body: {
             title: `Business Consultation - ${services[selectedService].name}`,
-            description: `Business consultation meeting with DecodersHQ.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`,
+            description: `Business consultation meeting with DECODERS HUB.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`,
             startDate: startDate.toISOString(),
             endDate: endDate.toISOString(),
             attendeeEmail: formData.email,
@@ -543,7 +543,7 @@ const Appointment = () => {
                   <div className="mb-8 text-left">
                     <AddToCalendar
                       title={`Business Consultation - ${services[selectedService].name}`}
-                      description={`Business consultation meeting with DecodersHQ.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`}
+                      description={`Business consultation meeting with DECODERS HUB.\n\nService: ${services[selectedService].name}\nAttendee: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\n${formData.company ? `Company: ${formData.company}\n` : ''}${formData.notes ? `Notes: ${formData.notes}` : ''}`}
                       startDate={date ? new Date(`${format(date, "yyyy-MM-dd")}T10:00:00`) : new Date()}
                       endDate={date ? new Date(`${format(date, "yyyy-MM-dd")}T11:00:00`) : new Date()}
                     />
