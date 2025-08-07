@@ -83,9 +83,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
-				heading: ['Playfair Display', 'serif'],
-				body: ['Inter', 'system-ui', 'sans-serif'],
+				sans: ['Work Sans', 'system-ui', 'sans-serif'],
+				heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+				body: ['Work Sans', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
