@@ -8,22 +8,22 @@ import businessSuccess from "@/assets/hero-business-success.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 to-green-50 min-h-screen flex items-center pt-16">
+    <section className="relative bg-gradient-to-br from-background to-muted min-h-screen flex items-center pt-16">
       <div className="container-custom relative z-10 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
-              Business Consultants<br />
-              <span className="text-blue-600">With a Growth Mindset</span>
+          <div className="space-y-8 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-foreground">
+              Decoders HQ —<br />
+              <span className="text-primary">Innovation. Strategy. Growth.</span>
             </h1>
-            <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
-              We partner with ambitious businesses to deliver strategic solutions that drive sustainable growth and operational excellence through innovative consulting approaches.
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-body">
+              We empower startups, businesses, and communities with high-impact tech and innovation solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-8">
-                <Link to="/appointment">Get Started</Link>
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">
+                <Link to="/contact">Get Started</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg px-8">
+              <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">
                 <Link to="/services">Learn More</Link>
               </Button>
             </div>
@@ -67,28 +67,6 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Feature cards */}
-        <div className="mt-20 grid md:grid-cols-2 gap-6 max-w-4xl">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="font-semibold text-gray-900 mb-2">Transform Your Business</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Strategic planning and innovative solutions designed to drive sustainable growth and operational excellence for your organization.
-            </p>
-            <Button asChild variant="link" className="text-blue-600 p-0 h-auto mt-3 font-medium">
-              <Link to="/services">Read More</Link>
-            </Button>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="font-semibold text-gray-900 mb-2">Expert Guidance</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Comprehensive consultancy services from experienced professionals who understand the challenges of modern business growth.
-            </p>
-            <Button asChild variant="link" className="text-blue-600 p-0 h-auto mt-3 font-medium">
-              <Link to="/services">Read More</Link>
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   );

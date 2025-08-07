@@ -83,8 +83,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Capriola', 'system-ui', 'sans-serif'],
-				heading: ['Capriola', 'system-ui', 'sans-serif'],
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+				heading: ['Playfair Display', 'serif'],
+				body: ['Inter', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
