@@ -13,18 +13,17 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-foreground">
-              DECODERS HUB —<br />
-              <span className="text-primary">Innovation. Strategy. Growth.</span>
+              TRANSFORMING IDEAS INTO MARKET-READY SOLUTIONS.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-body">
-              We empower startups, businesses, and communities with high-impact tech and innovation solutions.
+              From strategy to execution, we partner with you to build products, ecosystems, and innovations that drive real-world impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">
-                <Link to="/contact">Get Started</Link>
+                <Link to="/contact">Let's Collaborate</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">
-                <Link to="/services">Learn More</Link>
+                <Link to="/services">Explore Our Work</Link>
               </Button>
             </div>
           </div>
