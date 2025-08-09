@@ -83,9 +83,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				sans: ['Work Sans', 'system-ui', 'sans-serif'],
-				heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-				body: ['Work Sans', 'system-ui', 'sans-serif'],
+				sans: ['Roboto', 'system-ui', 'sans-serif'],
+				heading: ['Roboto', 'system-ui', 'sans-serif'],
+				body: ['Roboto', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
