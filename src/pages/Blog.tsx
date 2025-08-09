@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+
 import { Button } from "@/components/ui/button";
 import AIChat from "@/components/ui/AIChat";
 import { Search, Calendar } from "lucide-react";
@@ -224,7 +224,7 @@ const Blog = () => {
           </div>
         </section>
       </main>
-      <Footer />
+      
       <AIChat />
     </div>
   );
