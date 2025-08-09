@@ -71,7 +71,7 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <Button asChild className="bg-accent1-400 hover:bg-accent1-500 text-white font-medium">
+          <Button asChild variant="gradient" className="text-white font-medium">
             <Link to="/appointment">Book Appointment</Link>
           </Button>
         </div>
@@ -104,7 +104,7 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Button asChild className="bg-accent1-400 hover:bg-accent1-500 text-white w-full mt-4">
+            <Button asChild variant="gradient" className="text-white w-full mt-4">
               <Link to="/appointment" onClick={toggleMenu}>Book Appointment</Link>
             </Button>
           </div>
