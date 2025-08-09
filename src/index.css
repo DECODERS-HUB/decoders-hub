@@ -40,6 +40,10 @@
     --brand-cobalt: 213 77% 54%;
     --brand-teal: 180 81% 45%;
     --brand-light-bg: 210 14% 98%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #4F7AFF 0%, #8B5CF6 100%);
+    --gradient-primary-hover: linear-gradient(135deg, #3D68FF 0%, #7C3AED 100%);
   }
 
   .dark {

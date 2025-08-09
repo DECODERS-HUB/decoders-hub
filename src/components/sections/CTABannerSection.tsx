@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 const CTABannerSection = () => {
   return (
-    <section className="section-padding bg-gradient-to-r from-primary to-accent">
+    <section className="section-padding bg-gradient-primary">
       <div className="container-custom">
         <div className="text-center text-white">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-6">

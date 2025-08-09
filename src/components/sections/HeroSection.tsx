@@ -19,7 +19,7 @@ const HeroSection = () => {
               From strategy to execution, we partner with you to build products, ecosystems, and innovations that drive real-world impact.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">
+              <Button asChild variant="gradient" size="lg" className="rounded-lg px-8 py-3 text-lg font-medium">
                 <Link to="/contact">Let's Collaborate</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground rounded-lg px-8 py-3 text-lg font-medium">

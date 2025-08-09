@@ -82,6 +82,10 @@ export default {
 					500: '#06adb9',
 				}
 			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-primary-hover': 'var(--gradient-primary-hover)',
+			},
 			fontFamily: {
 				sans: ['Nunito', 'system-ui', 'sans-serif'],
 				heading: ['Nunito', 'system-ui', 'sans-serif'],
