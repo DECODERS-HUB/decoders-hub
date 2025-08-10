@@ -9,7 +9,7 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 animate-fade-in max-w-xl">
             {/* Tagline row */}
-            <div className="text-sm text-muted-foreground font-medium tracking-wider uppercase">
+            <div className="text-sm text-muted-foreground font-medium tracking-wider">
               Small Businesses · Agencies · Founders
             </div>
             
@@ -17,9 +17,9 @@ const HeroSection = () => {
               Empowering Bold Ideas to Thrive
             </h1>
             
-            <h2 className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-body">
+            <h5 className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-body">
               We help startups, businesses, and innovators turn vision into reality with strategic execution, technology, and ecosystem support.
-            </h2>
+            </h5>
             
             {/* Animated counter */}
             <div className="flex items-center gap-8 py-4">
