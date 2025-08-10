@@ -1,94 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => {
-  const [email, setEmail] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle email submission
-    console.log("Email submitted:", email);
-  };
-
   return (
     <section className="relative bg-gradient-to-br from-background to-muted min-h-screen flex items-center pt-16">
       <div className="container-custom relative z-10 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8 animate-fade-in max-w-xl">
-            <div className="flex gap-4 text-sm text-muted-foreground mb-6">
-              <span>Small businesses</span>
-              <span>Agencies</span>
-              <span>Freelancers</span>
-            </div>
-            
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight text-foreground">
-              Growing your business with confidence
+              Do better business, faster
             </h1>
             
             <p className="text-lg text-muted-foreground leading-relaxed font-body">
-              DECODERS HUB is the only tool you need to run your business. 
-              Manage your clients, deliver great work, get paid, and 
-              track your finances.
+              Unlock the intelligence you need to engage with the right 
+              business customers, accelerate onboarding – and keep them 
+              for life.
             </p>
             
-            <form onSubmit={handleSubmit} className="flex gap-2 max-w-md">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1"
-                required
-              />
+            <div className="flex gap-4">
               <Button 
-                type="submit" 
-                variant="gradient" 
-                className="px-6 whitespace-nowrap"
+                asChild
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3"
               >
-                Start free
+                <Link to="/appointment">Request a personal demo</Link>
               </Button>
-            </form>
+              <Button 
+                variant="outline"
+                asChild
+                className="px-6 py-3"
+              >
+                <Link to="/services">Why us</Link>
+              </Button>
+            </div>
           </div>
           
           <div className="relative">
             <div className="relative w-full h-[600px] overflow-hidden">
-              {/* Decorative elements */}
+              {/* Background decorative circle */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="relative">
-                  {/* Background decorative shapes */}
-                  <div className="absolute -top-20 -left-20 w-32 h-32 bg-gradient-primary/20 rounded-full blur-xl"></div>
-                  <div className="absolute -bottom-20 -right-20 w-32 h-32 bg-accent/20 rounded-full blur-xl"></div>
+                  {/* Large circular background */}
+                  <div className="w-96 h-96 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full"></div>
                   
-                  {/* Main illustration area */}
-                  <div className="relative w-80 h-80 bg-gradient-to-br from-primary/10 to-accent/10 rounded-3xl flex items-center justify-center">
-                    <div className="text-6xl">🚀</div>
+                  {/* Professional woman image placeholder */}
+                  <div className="absolute top-8 left-8 w-80 h-80 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center">
+                    <div className="text-8xl">👩‍💼</div>
                   </div>
                   
                   {/* Floating UI elements */}
-                  <div className="absolute -top-4 -right-4 bg-background/90 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm font-medium">New lead</span>
+                  <div className="absolute -top-8 -right-8 bg-background/95 backdrop-blur-sm border border-border rounded-xl p-4 shadow-lg min-w-[200px]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-foreground">Find the right customer</span>
+                        <p className="text-xs text-muted-foreground">BT generates £1.4m per month</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Invoice form completed</p>
                   </div>
                   
-                  <div className="absolute -bottom-8 -left-8 bg-background/90 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <span className="text-sm font-medium">$4,500</span>
+                  <div className="absolute top-20 -left-12 bg-background/95 backdrop-blur-sm border border-border rounded-xl p-4 shadow-lg min-w-[200px]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-foreground">Accelerate onboarding</span>
+                        <p className="text-xs text-muted-foreground">Metro Bank delivers 94% faster onboarding</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Invoice paid</p>
                   </div>
                   
-                  <div className="absolute top-16 -left-16 bg-background/90 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                      <span className="text-sm font-medium">$500</span>
+                  <div className="absolute -bottom-4 -left-8 bg-background/95 backdrop-blur-sm border border-border rounded-xl p-4 shadow-lg min-w-[200px]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                      </div>
+                      <div>
+                        <span className="text-sm font-semibold text-foreground">Keep for life</span>
+                        <p className="text-xs text-muted-foreground">LendLease monitors 1600 suppliers</p>
+                      </div>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">Expense deducted</p>
                   </div>
                 </div>
               </div>
