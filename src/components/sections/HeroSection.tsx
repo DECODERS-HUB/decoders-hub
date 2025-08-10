@@ -17,7 +17,7 @@ const HeroSection = () => {
               Empowering Bold Ideas to Thrive
             </h1>
             
-            <h2 className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-body">
+            <h2 className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-body uppercase">
               We help startups, businesses, and innovators turn vision into reality with strategic execution, technology, and ecosystem support.
             </h2>
             
