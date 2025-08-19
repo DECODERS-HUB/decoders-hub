@@ -87,9 +87,9 @@ export default {
 				'gradient-primary-hover': 'var(--gradient-primary-hover)',
 			},
 			fontFamily: {
-				sans: ['Nunito', 'system-ui', 'sans-serif'],
-				heading: ['Nunito', 'system-ui', 'sans-serif'],
-				body: ['Nunito', 'system-ui', 'sans-serif'],
+				sans: ['Roboto', 'system-ui', 'sans-serif'],
+				heading: ['Roboto', 'system-ui', 'sans-serif'],
+				body: ['Roboto', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

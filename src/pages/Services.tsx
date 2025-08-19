@@ -15,69 +15,47 @@ const Services = () => {
 
   const services = [
     {
+      id: "digital-product-development",
+      title: "Digital Product Development",
+      description: "End-to-end digital product development from concept to market-ready solutions with cutting-edge technology implementation.",
+      features: [
+        "Product Strategy & Design",
+        "Full-Stack Development", 
+        "Mobile App Development",
+        "MVP to Scale Solutions"
+      ]
+    },
+    {
+      id: "startup-mentorship",
+      title: "Startup Mentorship & Tech Implementation",
+      description: "Hands-on guidance for startups with practical technology implementation strategies and mentorship for sustainable growth.",
+      features: [
+        "Startup Strategy & Planning",
+        "Technology Stack Selection",
+        "Technical Implementation Support",
+        "Growth & Scaling Guidance"
+      ]
+    },
+    {
+      id: "innovation-ecosystem",
+      title: "Innovation & Ecosystem Evaluation",
+      description: "Comprehensive analysis of innovation landscapes and ecosystem development opportunities to drive collaborative growth.",
+      features: [
+        "Innovation Landscape Analysis",
+        "Ecosystem Mapping & Development",
+        "Partnership Strategy",
+        "Innovation Program Design"
+      ]
+    },
+    {
       id: "business-strategy",
-      title: "Business Strategy & Planning",
-      description: "Comprehensive strategic planning services to design sustainable business models and drive long-term growth through data-driven insights and market analysis.",
+      title: "Business Strategy Consulting",
+      description: "Strategic planning and execution guidance to drive sustainable growth and competitive advantage in dynamic markets.",
       features: [
         "Business Model Design",
-        "Business Plan Development", 
-        "Market Research & Analysis",
-        "Growth & Expansion Strategy"
-      ]
-    },
-    {
-      id: "financial-advisory",
-      title: "Financial Advisory",
-      description: "Expert financial guidance to optimize costs, improve profitability, and secure funding for sustainable business growth and expansion.",
-      features: [
-        "Financial Planning & Budgeting",
-        "Investment Readiness & Fundraising Support",
-        "Cost Optimization",
-        "Profitability Improvement"
-      ]
-    },
-    {
-      id: "branding-marketing",
-      title: "Branding & Marketing",
-      description: "Strategic brand development and comprehensive marketing solutions to enhance your market presence and drive customer acquisition.",
-      features: [
-        "Brand Identity Development",
-        "Marketing Strategy & Execution",
-        "Digital Marketing Guidance",
-        "Customer Acquisition Strategy"
-      ]
-    },
-    {
-      id: "operations-optimization",
-      title: "Operations & Process Optimization",
-      description: "Streamline operations and automate workflows to maximize organizational efficiency and reduce operational costs.",
-      features: [
-        "Business Process Improvement",
-        "Workflow Automation",
-        "Standard Operating Procedures (SOPs)",
-        "Organizational Efficiency"
-      ]
-    },
-    {
-      id: "leadership-development",
-      title: "Leadership & Team Development",
-      description: "Build strong leadership capabilities and foster high-performing team cultures that drive organizational success.",
-      features: [
-        "Leadership Coaching",
-        "Team Building & Culture Development",
-        "Talent Management Support",
-        "HR Policy Guidance"
-      ]
-    },
-    {
-      id: "digital-transformation",
-      title: "Technology & Digital Transformation",
-      description: "Navigate digital transformation with strategic technology integration and automation solutions for modern business challenges.",
-      features: [
-        "Digitalization Consulting",
-        "Technology Integration",
-        "Automation Solutions", 
-        "IT Systems Optimization"
+        "Market Analysis & Strategy",
+        "Growth & Expansion Planning",
+        "Competitive Positioning"
       ]
     }
   ];

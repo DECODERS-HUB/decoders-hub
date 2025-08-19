@@ -5,14 +5,9 @@ import { Lightbulb, Target, Users, Code } from "lucide-react";
 const ServicesSnapshotSection = () => {
   const services = [
     {
-      icon: Target,
-      title: "Business Strategy Consulting",
-      description: "Strategic planning and execution guidance to drive sustainable growth and competitive advantage."
-    },
-    {
-      icon: Lightbulb,
-      title: "Innovation & Ecosystem Evaluation",
-      description: "Comprehensive analysis of innovation landscapes and ecosystem development opportunities."
+      icon: Code,
+      title: "Digital Product Development",
+      description: "End-to-end digital product development from concept to market-ready solutions."
     },
     {
       icon: Users,
@@ -20,9 +15,14 @@ const ServicesSnapshotSection = () => {
       description: "Hands-on guidance for startups with practical technology implementation strategies."
     },
     {
-      icon: Code,
-      title: "Digital Product Development",
-      description: "End-to-end digital product development from concept to market-ready solutions."
+      icon: Lightbulb,
+      title: "Innovation & Ecosystem Evaluation",
+      description: "Comprehensive analysis of innovation landscapes and ecosystem development opportunities."
+    },
+    {
+      icon: Target,
+      title: "Business Strategy Consulting",
+      description: "Strategic planning and execution guidance to drive sustainable growth and competitive advantage."
     }
   ];
 
