@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Loader } from '@googlemaps/js-api-loader';
 import { supabase } from '@/integrations/supabase/client';
+import { MapPin } from 'lucide-react';
 
 interface GoogleMapProps {
   className?: string;
@@ -9,10 +10,15 @@ interface GoogleMapProps {
 const GoogleMap: React.FC<GoogleMapProps> = ({ className = "" }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<google.maps.Map | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const initMap = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         // Get the API key from Supabase Edge Functions
         const { data, error } = await supabase.functions.invoke('get-secret', {
           body: { name: 'GOOGLE_MAPS_API_KEY' }
@@ -20,13 +26,15 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = "" }) => {
 
         if (error || !data?.value) {
           console.error('Error fetching Google Maps API key:', error);
+          setError('Failed to load API key');
+          setLoading(false);
           return;
         }
 
         const loader = new Loader({
           apiKey: data.value,
           version: 'weekly',
-          libraries: ['places']
+          libraries: ['places', 'marker']
         });
 
         try {
@@ -44,33 +52,72 @@ const GoogleMap: React.FC<GoogleMapProps> = ({ className = "" }) => {
               zoomControl: true,
               streetViewControl: true,
               fullscreenControl: true,
+              mapId: 'DEMO_MAP_ID', // Required for AdvancedMarkerElement
             });
 
-            // Add a marker for the office location
-            new google.maps.Marker({
-              position: kwara,
-              map: mapInstanceRef.current,
-              title: 'DECODERS HUB - Kwara State, Nigeria',
-              icon: {
-                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 2C11.03 2 7 6.03 7 11C7 18.25 16 30 16 30S25 18.25 25 11C25 6.03 20.97 2 16 2ZM16 14.5C14.07 14.5 12.5 12.93 12.5 11S14.07 7.5 16 7.5S19.5 9.07 19.5 11S17.93 14.5 16 14.5Z" fill="#3B82F6"/>
-                  </svg>
-                `),
-                scaledSize: new google.maps.Size(32, 32),
-              }
-            });
+            // Use AdvancedMarkerElement instead of deprecated Marker
+            if (google.maps.marker?.AdvancedMarkerElement) {
+              const marker = new google.maps.marker.AdvancedMarkerElement({
+                position: kwara,
+                map: mapInstanceRef.current,
+                title: 'DECODERS HUB - Kwara State, Nigeria',
+              });
+            } else {
+              // Fallback to regular marker if AdvancedMarkerElement is not available
+              new google.maps.Marker({
+                position: kwara,
+                map: mapInstanceRef.current,
+                title: 'DECODERS HUB - Kwara State, Nigeria',
+              });
+            }
+            
+            setLoading(false);
           }
-        } catch (error) {
-          console.error('Error loading Google Maps:', error);
+        } catch (mapError) {
+          console.error('Error loading Google Maps:', mapError);
+          setError('Maps API not enabled. Please enable Google Maps JavaScript API in your Google Cloud Console.');
+          setLoading(false);
         }
-      } catch (error) {
-        console.error('Error fetching API key:', error);
+      } catch (fetchError) {
+        console.error('Error fetching API key:', fetchError);
+        setError('Failed to initialize map');
+        setLoading(false);
       }
     };
 
     initMap();
   }, []);
+
+  if (loading) {
+    return (
+      <div className={`w-full h-full flex items-center justify-center bg-muted ${className}`}>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+          <p className="text-sm text-muted-foreground">Loading map...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`w-full h-full flex items-center justify-center bg-muted border rounded-lg ${className}`}>
+        <div className="text-center p-6">
+          <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold mb-2">Map Unavailable</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            {error}
+          </p>
+          <div className="text-sm text-muted-foreground">
+            <p><strong>DECODERS HUB</strong></p>
+            <p>Kwara State, Nigeria</p>
+            <p>Phone: +234 123 456 7890</p>
+            <p>Email: info@decodershub.com</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return <div ref={mapRef} className={`w-full h-full ${className}`} />;
 };
