@@ -71,6 +71,7 @@ const Appointment = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedService, setSelectedService] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedTime, setSelectedTime] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -105,6 +106,13 @@ const Appointment = () => {
       toast({
         title: "Please select a date",
         description: "You need to select a date for your appointment.",
+        variant: "destructive",
+      });
+      return;
+    } else if (currentStep === 3 && !selectedTime) {
+      toast({
+        title: "Please select a time",
+        description: "You need to select a time for your appointment.",
         variant: "destructive",
       });
       return;
@@ -156,7 +164,7 @@ const Appointment = () => {
           service_id: services[selectedService].id,
           service_name: services[selectedService].name,
           appointment_date: format(date, 'yyyy-MM-dd'),
-          appointment_time: null // Remove time
+          appointment_time: selectedTime
         });
         
       if (error) {
@@ -172,8 +180,9 @@ const Appointment = () => {
       
       // Add appointment to Google Calendar automatically
       try {
-        const startDate = new Date(`${format(date, "yyyy-MM-dd")}T10:00:00`);
-        const endDate = new Date(`${format(date, "yyyy-MM-dd")}T11:00:00`);
+        const [hours, minutes] = selectedTime.split(':');
+        const startDate = new Date(`${format(date, "yyyy-MM-dd")}T${selectedTime}:00`);
+        const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Add 1 hour
         
         await supabase.functions.invoke('add-to-calendar', {
           body: {
@@ -194,11 +203,11 @@ const Appointment = () => {
       setIsSubmitting(false);
       toast({
         title: "Appointment Confirmed!",
-        description: `Your appointment for ${services[selectedService].name} on ${format(date, "PPP")} has been booked.`,
+        description: `Your appointment for ${services[selectedService].name} on ${format(date, "PPP")} at ${selectedTime} has been booked.`,
       });
       
       // Reset form
-      setCurrentStep(4); // Move to confirmation step
+      setCurrentStep(5); // Move to confirmation step
     } catch (error) {
       console.error("Error:", error);
       setIsSubmitting(false);
@@ -258,6 +267,17 @@ const Appointment = () => {
                   {currentStep > 3 ? <Check className="h-5 w-5" /> : 3}
                 </div>
                 <div className={`ml-3 ${currentStep >= 3 ? 'text-gray-900' : 'text-gray-500'}`}>
+                  <p className="font-medium">Time</p>
+                </div>
+              </div>
+              
+              <div className={`flex-1 h-1 mx-4 ${currentStep >= 4 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
+              
+              <div className="flex items-center">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${currentStep >= 4 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                  {currentStep > 4 ? <Check className="h-5 w-5" /> : 4}
+                </div>
+                <div className={`ml-3 ${currentStep >= 4 ? 'text-gray-900' : 'text-gray-500'}`}>
                   <p className="font-medium">Details</p>
                 </div>
               </div>
@@ -395,8 +415,59 @@ const Appointment = () => {
               </div>
             )}
             
-            {/* Step 3: Personal Details Form */}
+            {/* Step 3: Time Selection */}
             {currentStep === 3 && (
+              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-2xl mx-auto">
+                <div className="p-8 lg:p-12">
+                  <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Select Time</h2>
+                  
+                  <div className="space-y-8">
+                    <div>
+                      <label className="block text-lg font-medium text-gray-700 mb-4">
+                        Choose your preferred time
+                      </label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {[
+                          "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+                          "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+                          "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"
+                        ].map((time) => (
+                          <button
+                            key={time}
+                            type="button"
+                            onClick={() => setSelectedTime(time)}
+                            className={`p-4 rounded-lg border-2 transition-all duration-200 ${
+                              selectedTime === time
+                                ? 'border-blue-600 bg-blue-50 text-blue-600 font-semibold'
+                                : 'border-gray-300 hover:border-blue-300 hover:bg-blue-50'
+                            }`}
+                          >
+                            {time}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between pt-6">
+                      <Button variant="outline" onClick={handlePreviousStep} size="lg" className="px-8">
+                        Back
+                      </Button>
+                      <Button 
+                        onClick={handleNextStep} 
+                        size="lg" 
+                        className="bg-blue-600 hover:bg-blue-700 px-8"
+                        disabled={!selectedTime}
+                      >
+                        Continue
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Step 4: Personal Details Form */}
+            {currentStep === 4 && (
               <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-2xl mx-auto">
                 <div className="p-8 lg:p-12">
                   <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Your Information</h2>
@@ -505,8 +576,8 @@ const Appointment = () => {
               </div>
             )}
             
-            {/* Step 4: Confirmation */}
-            {currentStep === 4 && (
+            {/* Step 5: Confirmation */}
+            {currentStep === 5 && (
               <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-2xl mx-auto text-center">
                 <div className="p-8 lg:p-12">
                   <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
